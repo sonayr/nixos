@@ -2,7 +2,7 @@
   description = "Main Computer";
 
   inputs = {
-    nixpkgs.url = "github:Nixos/nixpkgs/nixos-24,11";
+    nixpkgs.url = "github:Nixos/nixpkgs/nixos-24.11";
   };
 
   outputs = { self, nixpkgs }: 
