@@ -71,18 +71,17 @@
     isNormalUser = true;
     description = "Ry";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
+    packages = [
     ];
   };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      ry = import ../home-manager/home.nix;
+      ry = import ./home.nix;
     };
   };
-
+  
   # Install firefox.
   programs.firefox.enable = true;
 
@@ -92,15 +91,15 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-     neovim
-     lf
-     tmux
-     ghostty
-     git
-     stow
-     home-manager
+     pkgs.neovim
+     pkgs.lf
+     pkgs.tmux
+     pkgs.ghostty
+     pkgs.zsh
+     pkgs.git
+     pkgs.home-manager
+     pkgs.gcc
+     inputs.sfdx.packages."x86_64-linux".default 
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

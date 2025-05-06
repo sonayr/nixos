@@ -4,12 +4,11 @@
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:Nixos/nixpkgs";
-    home-manager = {
+   home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    dotfiles.url = "path:home/ry/mysystem/home-manager/dotfiles";
-  };
+ };
 
   outputs =
     { nixpkgs, home-manager, ... } @inputs:
@@ -23,13 +22,13 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
+        modules = [ ../nixos/home.nix ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-	extraSpecialArgs = {
-	   inherit inputs;
-	};
+        extraSpecialArgs = {
+           inherit inputs;
+        };
       };
     };
 }
