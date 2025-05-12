@@ -103,6 +103,7 @@
      pkgs.git
      pkgs.home-manager
      pkgs.gcc
+     pkgs.waybar
      inputs.sfdx.packages."x86_64-linux".default 
   ];
 
