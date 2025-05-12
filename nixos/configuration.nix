@@ -42,7 +42,11 @@
   };
 
   services.xserver.desktopManager.gnome.enable = true;
-
+  services.xserver.desktopManager.hyprland = {
+       enable = true;
+       # Optional: Configure XWayland if needed
+       xwayland.enable = true;
+  };
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -103,11 +107,13 @@
      pkgs.lf
      pkgs.tmux
      pkgs.ghostty
+     pkgs.kitty
      pkgs.zsh
      pkgs.git
      pkgs.home-manager
      pkgs.gcc
      pkgs.waybar
+     pkgs.rofi-wayland
      inputs.sfdx.packages."x86_64-linux".default 
   ];
 
