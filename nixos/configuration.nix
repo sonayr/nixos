@@ -42,11 +42,6 @@
   };
 
   services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.desktopManager.hyprland = {
-       enable = true;
-       # Optional: Configure XWayland if needed
-       xwayland.enable = true;
-  };
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -95,7 +90,13 @@
   programs.firefox.enable = true;
 
   # Install hyprland
-  programs.hyprland.enable = true;
+    {
+      programs.hyprland = {
+        enable = true;
+        withUWSM = true; # recommended for most users
+        xwayland.enable = true; # Xwayland can be disabled.
+      };
+    }
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
