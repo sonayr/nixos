@@ -1,3 +1,6 @@
 [submodule "dotfiles"]
 	path = dotfiles
 	url = https://github.com/sonayr/dotfiles
+[submodule "home-manager/dotfiles"]
+	path = home-manager/dotfiles
+	url = https://github.com/sonayr/dotfiles
