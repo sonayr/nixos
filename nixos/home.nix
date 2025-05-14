@@ -25,17 +25,15 @@
   home.file = {
      ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/nvim/.config/nvim";
      ".config/hypr/" = {
-        source = ../home-manager/dotfiles/hypr/.config/hypr;
+        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/hypr/.config/hypr";
+        force = true;
         recursive = true;
-	    force = true;
-
     };
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
 
   };
-
   home.sessionVariables = {
      vim = "nvim";
   };

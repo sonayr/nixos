@@ -84,6 +84,7 @@
     users = {
       ry = import ./home.nix;
     };
+    backupFileExtension = "backup";
   };
   
   # Install firefox.
@@ -113,9 +114,9 @@
      pkgs.gcc
      pkgs.waybar
      pkgs.rofi-wayland
+     pkgs.hyprpaper
      inputs.sfdx.packages."x86_64-linux".default 
   ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

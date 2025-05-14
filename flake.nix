@@ -20,6 +20,7 @@
 	};
   in
   {
+    self.submodules = true;
      nixosConfigurations = {
         myNixos = nixpkgs.lib.nixosSystem {
 	   specialArgs = { inherit inputs system; };
