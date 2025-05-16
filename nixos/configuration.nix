@@ -77,6 +77,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = [
     ];
+    shell = pkgs.zsh;
   };
 
   home-manager = {
@@ -89,6 +90,20 @@
   
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Install zsh
+  programs.zsh = {
+      enable = true;
+      ohMyZsh = {
+        enable = true;
+        theme = "cloud";
+        plugins = [
+            "git"
+            "wd"
+        ];
+      };
+  };
+
 
   # Install hyprland
   programs.hyprland = {
@@ -107,13 +122,13 @@
      pkgs.lf
      pkgs.tmux
      pkgs.ghostty
-     pkgs.kitty
-     pkgs.zsh
      pkgs.git
      pkgs.home-manager
      pkgs.gcc
+     pkgs.fzf
+     pkgs.repgrep
      pkgs.waybar
-     pkgs.rofi-wayland
+     pkgs.wofi
      pkgs.hyprpaper
      inputs.sfdx.packages."x86_64-linux".default 
   ];

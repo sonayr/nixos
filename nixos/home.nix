@@ -31,6 +31,11 @@
     ".config/waybar" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/waybar/.config/waybar";
     };
+    ".config/zsh" = { 
+        source = config.lib.file.mkOutOfStoreSymlink  "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/zsh";
+    };
+    ".zshenv".text = "ZDOTDIR=~/.config/zsh";
+
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
     # ".screenrc".source = dotfiles/screenrc;
