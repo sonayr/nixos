@@ -89,7 +89,7 @@
   };
   
   # Install firefox.
-  programs.firefox.enable = true;
+  # programs.firefox.enable = true;
 
   # Install zsh
   programs.zsh = {
@@ -103,7 +103,12 @@
         ];
       };
   };
-
+  fonts = {
+    enableFontDir = true;
+    packages = with pkgs; [
+        font-awesome
+    ];
+  };
 
   # Install hyprland
   programs.hyprland = {
@@ -130,6 +135,7 @@
      pkgs.waybar
      pkgs.wofi
      pkgs.hyprpaper
+     pkgs.brave
      inputs.sfdx.packages."x86_64-linux".default 
   ];
   # Some programs need SUID wrappers, can be configured further or are

@@ -20,6 +20,16 @@
         pkgs.luajitPackages.luarocks-nix
   ];
 
+  programs.chromium = {
+    enable = true;
+    package = pkgs.brave;
+    extensions = [
+        { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } #vimium c
+        { id = "hpijlohoihegkfehhibggnkbjhoemldh"; } #Salesforce Inspector reloaded
+        { id = "hdokiejnpimakedhajhdlcegeplioahd"; } #Last Pass
+    ];
+  };
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
