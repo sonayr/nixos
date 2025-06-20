@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.home-manager
-      ../services/kanata.nix
+      ../services/system
     ];
 
   # Bootloader.
@@ -70,18 +70,20 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ry = {
     isNormalUser = true;
     description = "Ry";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = [
-    ];
     shell = pkgs.zsh;
   };
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
     users = {
       ry = import ./home.nix;
     };
@@ -110,52 +112,19 @@
     ];
   };
 
-  # Install hyprland
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true; # recommended for most users
-    xwayland.enable = true; # Xwayland can be disabled.
-  };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-     pkgs.neovim
-     pkgs.lf
-     pkgs.tmux
-     pkgs.ghostty
+  environment.systemPackages = [
      pkgs.git
      pkgs.home-manager
-     pkgs.gcc
-     pkgs.fzf
-     pkgs.repgrep
-     pkgs.waybar
-     pkgs.wofi
-     pkgs.hyprpaper
-     pkgs.brave
+     pkgs.kdePackages.qtsvg
+     pkgs.gimp-with-plugins
      inputs.sfdx.packages."x86_64-linux".default 
   ];
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
