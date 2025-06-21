@@ -1,13 +1,13 @@
 { config, lib, pkgs, ... }:
 
 {
-    imports = [
-        ./brave.nix
-    ];
+  imports = [
+    ./brave.nix
+  ];
 
-    home.packages = with pkgs; [
-        todoist-electron
-        obsidian
-    ];
-
+  home.packages = with pkgs; [
+    todoist-electron
+    obsidian
+    gimp-with-plugins
+  ];
 }

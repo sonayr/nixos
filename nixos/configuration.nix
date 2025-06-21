@@ -118,7 +118,6 @@
      pkgs.git
      pkgs.home-manager
      pkgs.kdePackages.qtsvg
-     pkgs.gimp-with-plugins
      inputs.sfdx.packages."x86_64-linux".default 
   ];
 
