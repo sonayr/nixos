@@ -2,14 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs,config, pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
-      ../services/system
+      ../../services/system
     ];
 
   # Bootloader.
@@ -82,43 +82,43 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    # extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
     users = {
-      ry = import ./home.nix;
+      ry = import ../../home-manager/home.nix;
     };
     backupFileExtension = "backup";
   };
-  
+
   # Install firefox.
   # programs.firefox.enable = true;
 
   # Install zsh
   programs.zsh = {
+    enable = true;
+    ohMyZsh = {
       enable = true;
-      ohMyZsh = {
-        enable = true;
-        theme = "cloud";
-        plugins = [
-            "git"
-            "wd"
-        ];
-      };
+      theme = "cloud";
+      plugins = [
+        "git"
+        "wd"
+      ];
+    };
   };
   fonts = {
     enableFontDir = true;
     packages = with pkgs; [
-        font-awesome
+      font-awesome
     ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = [
-     pkgs.git
-     pkgs.home-manager
-     pkgs.kdePackages.qtsvg
-     inputs.sfdx.packages."x86_64-linux".default 
+    pkgs.git
+    pkgs.home-manager
+    pkgs.kdePackages.qtsvg
+    # inputs.sfdx.packages."x86_64-linux".default
   ];
 
   # Enable the OpenSSH daemon.

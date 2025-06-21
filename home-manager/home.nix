@@ -1,7 +1,7 @@
 { config, pkgs, self, ... }:
 {
   imports = [
-    ../services/apps
+    ./apps
   ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -20,7 +20,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-        pkgs.luajitPackages.luarocks-nix
+    pkgs.luajitPackages.luarocks-nix
   ];
 
   # programs.chromium = {
@@ -36,16 +36,16 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-     ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/nvim/.config/nvim";
-     ".config/hypr/" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/hypr/.config/hypr";
-        force = true;
+    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/nvim/.config/nvim";
+    ".config/hypr/" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/hypr/.config/hypr";
+      force = true;
     };
     ".config/waybar" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/waybar/.config/waybar";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/waybar/.config/waybar";
     };
-    ".config/zsh" = { 
-        source = config.lib.file.mkOutOfStoreSymlink  "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/zsh";
+    ".config/zsh" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/zsh";
     };
     ".zshenv".text = "ZDOTDIR=~/.config/zsh";
 
@@ -55,7 +55,7 @@
 
   };
   home.sessionVariables = {
-     vim = "nvim";
+    vim = "nvim";
   };
 
   # Let Home Manager install and manage itself.
