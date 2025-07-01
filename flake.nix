@@ -2,8 +2,8 @@
   description = "Nixos configuration";
 
   inputs = {
-    nixpkgs.url = "github:Nixos/nixpkgs/nixos-24.11";
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    nixpkgs.url = "github:Nixos/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sfdx.url = "github:rfaulhaber/sfdx-nix";
     sfdx.inputs.nixpkgs.follows = "nixpkgs";

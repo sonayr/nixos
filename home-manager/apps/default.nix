@@ -3,11 +3,11 @@
 {
   imports = [
     ./brave.nix
+    ./obsidian.nix
   ];
 
   home.packages = with pkgs; [
     todoist-electron
-    obsidian
     gimp-with-plugins
   ];
 }

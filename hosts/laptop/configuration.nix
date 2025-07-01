@@ -53,6 +53,18 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
+  hardware.pulseaudio.configFile = pkgs.writeText "default.pa" ''
+    load-module module-bluetooth-policy
+    load-module module-bluetooth-discover
+  '';
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        ControllerMode = "bredr";
+      };
+    };
+  };
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

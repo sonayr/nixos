@@ -9,6 +9,8 @@
         { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } #vimium c
         { id = "hpijlohoihegkfehhibggnkbjhoemldh"; } #Salesforce Inspector reloaded
         { id = "hdokiejnpimakedhajhdlcegeplioahd"; } #Last Pass
+        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } #Dark Reader
+
     ];
   };
 

@@ -5,6 +5,7 @@
         ./swap.nix
         ./hyprland.nix
         ./neovim.nix
+        ./bluetooth.nix
     ];
 }
 
