@@ -4,6 +4,7 @@
   imports = [
     ./brave.nix
     ./obsidian.nix
+    ./mako.nix
   ];
 
   home.packages = with pkgs; [

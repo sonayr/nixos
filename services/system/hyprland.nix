@@ -14,7 +14,6 @@
       wofi
       copyq
       wl-clipboard
-      mako
       blueman
       playerctl
       brightnessctl
