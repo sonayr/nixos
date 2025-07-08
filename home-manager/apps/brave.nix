@@ -1,8 +1,7 @@
-
 { config, lib, pkgs, ... }:
 
 {
-  programs.chromium = {
+  programs.brave = {
     enable = true;
     package = pkgs.brave;
     extensions = [
@@ -10,11 +9,6 @@
         { id = "hpijlohoihegkfehhibggnkbjhoemldh"; } #Salesforce Inspector reloaded
         { id = "hdokiejnpimakedhajhdlcegeplioahd"; } #Last Pass
         { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } #Dark Reader
-
     ];
   };
-
-  home.packages = [
-     pkgs.brave
-  ];
 }

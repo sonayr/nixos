@@ -41,7 +41,7 @@
     wayland = true;
   };
 
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -57,14 +57,7 @@
     load-module module-bluetooth-policy
     load-module module-bluetooth-discover
   '';
-  hardware.bluetooth = {
-    enable = true;
-    settings = {
-      General = {
-        ControllerMode = "bredr";
-      };
-    };
-  };
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -118,7 +111,7 @@
     };
   };
   fonts = {
-    enableFontDir = true;
+    fontDir.enable = true;
     packages = with pkgs; [
       font-awesome
     ];
