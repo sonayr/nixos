@@ -113,7 +113,7 @@
   fonts = {
     fontDir.enable = true;
     packages = with pkgs; [
-      font-awesome
+        nerd-fonts._3270
     ];
   };
 
@@ -121,6 +121,7 @@
   # $ nix search wget
   environment.systemPackages = [
     pkgs.git
+    pkgs.alsa-utils
     pkgs.home-manager
     pkgs.kdePackages.qtsvg
     # inputs.sfdx.packages."x86_64-linux".default

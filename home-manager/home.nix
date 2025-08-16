@@ -49,6 +49,7 @@
     };
     ".zshenv".text = "ZDOTDIR=~/.config/zsh";
     ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/tmux/.tmux.conf";
+    ".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/scripts/.local/bin";
 
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.

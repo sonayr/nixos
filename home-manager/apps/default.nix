@@ -5,6 +5,7 @@
     ./brave.nix
     ./obsidian.nix
     ./mako.nix
+    ./cliTools.nix
   ];
 
   home.packages = with pkgs; [
