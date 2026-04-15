@@ -36,7 +36,7 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm = {
+  services.displayManager.gdm = {
     enable = true;
     wayland = true;
   };
@@ -52,8 +52,8 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
-  hardware.pulseaudio.configFile = pkgs.writeText "default.pa" ''
+  services.pulseaudio.enable = false;
+  services.pulseaudio.configFile = pkgs.writeText "default.pa" ''
     load-module module-bluetooth-policy
     load-module module-bluetooth-discover
   '';
@@ -77,6 +77,9 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "broadcom-sta-6.30.223.271-59-6.18.22"
+  ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ry = {
