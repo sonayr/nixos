@@ -7,26 +7,19 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sfdx.url = "github:rfaulhaber/sfdx-nix";
     sfdx.inputs.nixpkgs.follows = "nixpkgs";
-    
+
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    todoist-opencode.url = "path:./todoist-opencode-bridge";
+    todoist-bridge.url = "git+file:///home/ryan/todoist-opencode-bridge";
+    todoist-bridge.inputs.nixpkgs.follows = "nixpkgs";
+    nixarr.url = "github:nix-media-server/nixarr";
+    nixarr.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, sops-nix, todoist-opencode, ... } @ inputs:
-    let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
-        };
-      };
-    in
+  outputs = { self, nixpkgs, home-manager, sops-nix, todoist-bridge, nixarr, ... } @ inputs:
     {
-      self.submodules = true;
       nixosConfigurations = {
-        laptop = import ./hosts/laptop/laptop.nix { inherit inputs nixpkgs home-manager;};
+        laptop = import ./hosts/laptop/laptop.nix { inherit inputs nixpkgs home-manager; };
         server = import ./hosts/server/server.nix { inherit inputs nixpkgs; };
       };
     };

@@ -6,22 +6,24 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../services/system/nixarr.nix
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "server"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  services.logind.lidSwitch = "ignore";
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -55,7 +57,7 @@
     isNormalUser = true;
     description = "Ryan";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages
@@ -64,10 +66,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  neovim
-  opencode
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
+    neovim
+    opencode
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -95,7 +97,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.11"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
   # --- SOPS Configuration ---
   sops.defaultSopsFile = ./secrets.yaml;
@@ -104,17 +106,18 @@
 
   sops.secrets.todoist_api_token = { owner = "ryan"; };
   sops.secrets.todoist_client_secret = { owner = "ryan"; };
-  sops.secrets.cloudflare_credentials = {};
+  sops.secrets.cloudflare_credentials = { };
+  sops.secrets.wg_conf = { };
 
   # --- Todoist Opencode Bridge Configuration ---
   services.todoist-opencode-bridge = {
     enable = true;
     port = 3000;
-    
+
     # Path to the decrypted secrets
     todoistApiTokenFile = config.sops.secrets.todoist_api_token.path;
     todoistClientSecretFile = config.sops.secrets.todoist_client_secret.path;
-    
+
     # Cloudflare configuration
     cloudflaredEnable = true;
     cloudflaredCredentialsFile = config.sops.secrets.cloudflare_credentials.path;
