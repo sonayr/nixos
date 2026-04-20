@@ -56,6 +56,7 @@
       ExecStart = "${pkgs.shelfmark}/bin/shelfmark";
       Restart = "on-failure";
       StateDirectory = "shelfmark";
+      LogsDirectory = "shelfmark";
       WorkingDirectory = "/var/lib/shelfmark";
       
       # Security hardening (optional but recommended)
