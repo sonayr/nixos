@@ -149,11 +149,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776354454,
-        "narHash": "sha256-W97c011ClTsq1rUlVM5/MiSubzbmFMhoR4ixds/NjPQ=",
+        "lastModified": 1776717536,
+        "narHash": "sha256-cly61seOtUunApP3lrCdsmzN0MGohwXRih3ZKSA667g=",
         "ref": "refs/heads/master",
-        "rev": "8c7b239c580e4813608338318c1877a0b509e6c7",
-        "revCount": 2,
+        "rev": "76c9aa61b39ac80984b0d94abc504d1de3dd51ca",
+        "revCount": 4,
         "type": "git",
         "url": "file:///home/ryan/todoist-opencode-bridge"
       },
