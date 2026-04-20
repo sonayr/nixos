@@ -47,13 +47,14 @@
       CONFIG_DIR = "/var/lib/shelfmark";
       CWA_DB_PATH = "/var/lib/calibre-web/app.db";
       INGEST_DIR = "/data/media/library/books";
+      TMP_DIR = "/var/lib/shelfmark/tmp";
     };
 
     serviceConfig = {
       Type = "simple";
       User = "calibre-web";
       Group = "calibre-web";
-      ExecStart = "${pkgs.shelfmark}/bin/shelfmark";
+      ExecStart = "${pkgs.shelfmark}/bin/shelfmark --bind 0.0.0.0:8084";
       Restart = "on-failure";
       StateDirectory = "shelfmark";
       LogsDirectory = "shelfmark";
