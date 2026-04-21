@@ -10,7 +10,7 @@
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-    todoist-bridge.url = "git+file:///home/ryan/todoist-opencode-bridge";
+    todoist-bridge.url = "git+ssh://git@github.com/sonayr/todoist-bridge.git";
     todoist-bridge.inputs.nixpkgs.follows = "nixpkgs";
     nixarr.url = "github:nix-media-server/nixarr";
     nixarr.inputs.nixpkgs.follows = "nixpkgs";

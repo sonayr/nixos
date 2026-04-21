@@ -155,11 +155,11 @@
         "rev": "76c9aa61b39ac80984b0d94abc504d1de3dd51ca",
         "revCount": 4,
         "type": "git",
-        "url": "file:///home/ryan/todoist-opencode-bridge"
+        "url": "ssh://git@github.com/sonayr/todoist-bridge.git"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/ryan/todoist-opencode-bridge"
+        "url": "ssh://git@github.com/sonayr/todoist-bridge.git"
       }
     },
     "vpnconfinement": {
