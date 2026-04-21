@@ -61,3 +61,37 @@ sops hosts/server/secrets.yaml
 ```
 
 Make sure the private `age` key matches the public key specified in `.sops.yaml` to successfully decrypt and edit.
+
+### Bootstrapping a New Server (Secrets)
+
+If you are setting up the server from scratch, you will need to provision the required secrets before the configuration can be successfully applied.
+
+1. **Generate an `age` key** on your deployment machine (if you haven't already):
+   ```bash
+   mkdir -p ~/.config/sops/age
+   age-keygen -o ~/.config/sops/age/keys.txt
+   ```
+2. **Update `.sops.yaml`**: Add your new public key to the `.sops.yaml` configuration at the root of the repository so SOPS knows it is authorized to encrypt/decrypt secrets.
+3. **Create the secrets file**:
+   ```bash
+   sops hosts/server/secrets.yaml
+   ```
+4. **Fill in the required secrets**: The server configuration relies on several API tokens and private configurations. When the SOPS editor opens, provide the following keys:
+   ```yaml
+   todoist_api_token: "your_todoist_api_token_here"
+   todoist_client_secret: "your_todoist_client_secret_here"
+   cloudflare_credentials: |
+     {"AccountTag":"...","TunnelSecret":"...","TunnelID":"..."}
+   wg_conf: |
+     [Interface]
+     PrivateKey = ...
+     Address = ...
+     DNS = ...
+     
+     [Peer]
+     PublicKey = ...
+     AllowedIPs = 0.0.0.0/0
+     Endpoint = ...
+   ```
+
+Save and exit the editor. SOPS will automatically encrypt the file, and you will then be able to deploy the server configuration.
