@@ -7,28 +7,28 @@
     obsidian = {
       enable = true;
       defaultSettings = {
-      app = {
-        vimMode = true;
-      };
-      appearance = {
-        theme = "obsidian";
-      };
-      hotkeys = {
-        "file-explorer:move-file" = {
-          modifiers = [
-            "Mod"
-            "Shift"
-          ];
-          key = "D";
+        app = {
+          vimMode = true;
         };
-        "file-explorer:new-folder" = {
-          modifiers = [
-            "Mod"
-          ];
-          key = "D";
+        appearance = {
+          theme = "obsidian";
         };
-        "editor:delete-paragraph" = [ ];
-      };
+        hotkeys = {
+          "file-explorer:move-file" = {
+            modifiers = [
+              "Mod"
+              "Shift"
+            ];
+            key = "D";
+          };
+          "file-explorer:new-folder" = {
+            modifiers = [
+              "Mod"
+            ];
+            key = "D";
+          };
+          "editor:delete-paragraph" = [ ];
+        };
       };
     };
   };

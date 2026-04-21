@@ -36,20 +36,20 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/nvim/.config/nvim";
+    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/nvim/.config/nvim";
     ".config/hypr/" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/hypr/.config/hypr";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr";
       force = true;
     };
     ".config/waybar" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/waybar/.config/waybar";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/waybar/.config/waybar";
     };
     ".config/zsh" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/zsh";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/zsh";
     };
     ".zshenv".text = "ZDOTDIR=~/.config/zsh";
-    ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/tmux/.tmux.conf";
-    ".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/mysystem/home-manager/dotfiles/scripts/.local/bin";
+    ".tmux.conf".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/tmux/.tmux.conf";
+    ".local/bin".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/scripts/.local/bin";
 
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.

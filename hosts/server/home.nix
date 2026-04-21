@@ -15,7 +15,7 @@
       attributes." </example> <example> Context: The user is experiencing issues with server-side
       rendering or HTMX swaps. user: "The HTMX swap is replacing the whole body instead of the target div."
       assistant: "I will use the go-htmx-dev agent to debug your Go templates and HTMX attributes." </example>
-    mode: primary
+    mode: subagent
     tools:
       bash: true
       read: true

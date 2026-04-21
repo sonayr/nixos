@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -16,7 +16,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   nix.settings.experimental-features = "nix-command flakes";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "laptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -53,10 +53,6 @@
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
-  services.pulseaudio.configFile = pkgs.writeText "default.pa" ''
-    load-module module-bluetooth-policy
-    load-module module-bluetooth-discover
-  '';
 
   security.rtkit.enable = true;
   services.pipewire = {
@@ -90,8 +86,9 @@
   };
 
   home-manager = {
-    # extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
+    useUserPackages = true;
     users = {
       ry = import ../../home-manager/home.nix;
     };
@@ -116,7 +113,7 @@
   fonts = {
     fontDir.enable = true;
     packages = with pkgs; [
-        nerd-fonts._3270
+      nerd-fonts._3270
     ];
   };
 
