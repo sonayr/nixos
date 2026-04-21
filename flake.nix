@@ -20,7 +20,7 @@
     {
       nixosConfigurations = {
         laptop = import ./hosts/laptop/laptop.nix { inherit inputs nixpkgs home-manager; };
-        server = import ./hosts/server/server.nix { inherit inputs nixpkgs; };
+        server = import ./hosts/server/server.nix { inherit inputs nixpkgs home-manager; };
       };
     };
 }
