@@ -85,6 +85,9 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  # Enable n8n service
+  services.n8n.enable = true;
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
