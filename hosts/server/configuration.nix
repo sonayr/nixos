@@ -86,6 +86,38 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  # Enable Samba for network shares
+  services.samba = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      global = {
+        "workgroup" = "WORKGROUP";
+        "server string" = "nixos-server";
+        "netbios name" = "nixos-server";
+        "security" = "user";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+      "storage" = {
+        "path" = "/mnt/storage-pool";
+        "browseable" = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "ryan";
+        "force group" = "users";
+      };
+    };
+  };
+
+  # Enable WS-Discovery so Windows can easily find the Samba share
+  services.samba-wsdd = {
+    enable = true;
+    openFirewall = true;
+  };
+
   # Enable n8n service
   services.n8n.enable = true;
 
