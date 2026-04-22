@@ -70,6 +70,7 @@
     #  wget
     neovim
     opencode
+    mergerfs
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -93,6 +94,31 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
+  fileSystems."/mnt/disk/disk1" = {
+    device = "/dev/disk/by-uuid/63700bfa-dd4c-4e56-9b01-83d84097b6c7";
+    fsType = "ext4";
+    options = [ "nofail" ];
+  };
+
+  fileSystems."/mnt/storage-pool" = {
+    fsType = "fuse.mergerfs";
+    device = "/mnt/disk/disk1"; # explicit path instead of glob for now, or just add depends
+    depends = [ "/mnt/disk/disk1" ];
+    options = [
+      "cache.files=partial"
+      "dropcacheonclose=true"
+      "category.create=epmfs"
+      "minfreespace=50G"
+      "fsname=mergerfs"
+      "allow_other"
+    ];
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /mnt/disk/disk1/media 0775 ryan users -"
+    "d /mnt/disk/disk1/backups 0775 ryan users -"
+  ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
