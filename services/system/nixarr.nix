@@ -3,7 +3,7 @@
 {
   nixarr = {
     enable = true;
-    mediaDir = "/data/media";
+    mediaDir = "/mnt/storage-pool/media";
     stateDir = "/data/.state/nixarr";
 
     vpn = {
