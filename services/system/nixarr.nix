@@ -21,7 +21,7 @@
     readarr.enable = false;
   };
   
-  networking.firewall.allowedTCPPorts = [ 8083 8084 ]; # 8083 for Calibre-Web, 8084 for Shelfmark
+  networking.firewall.allowedTCPPorts = [ 8083 8084 9091 ]; # 8083 for Calibre-Web, 8084 for Shelfmark
 
   services.calibre-web = {
     enable = true;

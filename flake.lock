@@ -149,11 +149,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776717536,
-        "narHash": "sha256-cly61seOtUunApP3lrCdsmzN0MGohwXRih3ZKSA667g=",
+        "lastModified": 1777062456,
+        "narHash": "sha256-INsZjYmF2GXtjZ2Qz3PGKuIRvm41HY0i/6hkspIaSS4=",
         "ref": "refs/heads/master",
-        "rev": "76c9aa61b39ac80984b0d94abc504d1de3dd51ca",
-        "revCount": 4,
+        "rev": "ba1ea53f657df9fcb66c349c8a7195daef0082de",
+        "revCount": 5,
         "type": "git",
         "url": "ssh://git@github.com/sonayr/todoist-bridge.git"
       },
