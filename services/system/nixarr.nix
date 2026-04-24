@@ -16,6 +16,9 @@
     radarr.enable = true;
     transmission.enable = true;
     transmission.vpn.enable = true;
+    transmission.extraSettings = {
+      rpc-host-whitelist-enabled = false;
+    };
     prowlarr.enable = true;
     jellyseerr.enable = true;
     readarr.enable = false;
