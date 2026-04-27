@@ -192,6 +192,12 @@
         { command = "/run/current-system/sw/bin/nix"; options = [ "NOPASSWD" ]; }
         { command = "/run/current-system/sw/bin/nixos-rebuild"; options = [ "NOPASSWD" ]; }
         { command = "/run/current-system/sw/bin/systemctl"; options = [ "NOPASSWD" ]; }
+        { command = "/run/wrappers/bin/mkdir"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/mkdir"; options = [ "NOPASSWD" ]; }
+        { command = "/run/wrappers/bin/chown"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/chown"; options = [ "NOPASSWD" ]; }
+        { command = "/run/wrappers/bin/chmod"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/chmod"; options = [ "NOPASSWD" ]; }
       ];
     }
   ];
