@@ -16,15 +16,18 @@
     radarr.enable = true;
     transmission.enable = true;
     transmission.vpn.enable = true;
-    transmission.extraSettings = {
-      rpc-host-whitelist-enabled = false;
-    };
     prowlarr.enable = true;
     jellyseerr.enable = true;
     readarr.enable = false;
   };
   
-  networking.firewall.allowedTCPPorts = [ 8083 8084 9091 ]; # 8083 for Calibre-Web, 8084 for Shelfmark
+  services.flaresolverr = {
+    enable = true;
+    port = 8191;
+  };
+
+  # 8083 for Calibre-Web, 8084 for Shelfmark, 8191 for FlareSolverr
+  networking.firewall.allowedTCPPorts = [ 8083 8084 8191 ];
 
   services.calibre-web = {
     enable = true;
