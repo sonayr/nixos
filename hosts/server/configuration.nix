@@ -184,9 +184,10 @@
     cloudflaredCredentialsFile = config.sops.secrets.cloudflare_credentials.path;
   };
 
-  # Add Jellyfin to the existing cloudflared tunnel
+  # Add Jellyfin and Jellyseerr to the existing cloudflared tunnel
   services.cloudflared.tunnels."todoist-webhook".ingress = {
     "jelly.onayr.com" = "http://localhost:8096";
+    "seer.onayr.com" = "http://localhost:5055";
   };
 
   # Allow passwordless sudo for nix operations and systemctl
