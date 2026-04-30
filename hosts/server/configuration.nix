@@ -122,7 +122,7 @@
   services.n8n.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 8080 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -182,6 +182,11 @@
     # Cloudflare configuration
     cloudflaredEnable = true;
     cloudflaredCredentialsFile = config.sops.secrets.cloudflare_credentials.path;
+  };
+
+  # Add Jellyfin to the existing cloudflared tunnel
+  services.cloudflared.tunnels."todoist-webhook".ingress = {
+    "jelly.onayr.com" = "http://localhost:8096";
   };
 
   # Allow passwordless sudo for nix operations and systemctl
