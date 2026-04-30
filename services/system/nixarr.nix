@@ -20,6 +20,11 @@
     jellyseerr.enable = true;
     readarr.enable = false;
   };
+
+  services.transmission.settings = {
+    ratio-limit-enabled = true;
+    ratio-limit = 1.0;
+  };
   
   services.flaresolverr = {
     enable = true;
