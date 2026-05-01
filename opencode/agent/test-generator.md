@@ -15,7 +15,7 @@ description: >-
   cover the missing branches." <commentary> The user needs to increase test
   coverage, which is a core capability of the test-generator agent.
   </commentary> </example>
-mode: primary
+mode: subagent
 tools:
   write: false
   edit: false
