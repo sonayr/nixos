@@ -10,6 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../services/system/nixarr.nix
+      ../../services/system/monitoring.nix
     ];
 
   # Bootloader.
@@ -208,4 +209,17 @@
     }
   ];
 
+  # Enable Nvidia drivers and NVENC hardware acceleration
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = false;
+  };
+  hardware.graphics = {
+    enable = true;
+  };
+
+  # Give Jellyfin access to the GPU
+  users.users.jellyfin.extraGroups = [ "render" "video" ];
 }
