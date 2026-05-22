@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       ../../services/system/nixarr.nix
       ../../services/system/monitoring.nix
+      ../../services/system/paperless.nix
     ];
 
   # Bootloader.
@@ -28,6 +29,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Set your time zone.
   time.timeZone = "America/New_York";
@@ -120,10 +122,15 @@
   };
 
   # Enable n8n service
-  services.n8n.enable = true;
+  services.n8n = {
+    enable = true;
+    environment = {
+      N8N_SECURE_COOKIE = "false";
+    };
+  };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 8080 ];
+  networking.firewall.allowedTCPPorts = [ 8080 5678 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
@@ -215,6 +222,7 @@
     modesetting.enable = true;
     open = false;
     nvidiaSettings = false;
+    package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   };
   hardware.graphics = {
     enable = true;
