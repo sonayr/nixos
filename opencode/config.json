@@ -1,0 +1,24 @@
+{
+  "tools": {
+    "slack": false,
+    "confluence": false
+  },
+  "mcp": {
+    "confluence": {
+      "type": "local",
+      "command": [
+        "bash",
+        "-c",
+        "export SOPS_AGE_KEY_FILE=/home/ryan/.config/sops/age/keys.txt; export CONFLUENCE_API_TOKEN=$(nix shell nixpkgs#sops --command sops -d ~/nixos/hosts/server/secrets.yaml | awk '/confluence_api_token:/ {print $2}'); exec nix shell nixpkgs#nodejs --command npx -y @modelcontextprotocol/server-confluence"
+      ]
+    },
+    "slack": {
+      "type": "local",
+      "command": [
+        "bash",
+        "-c",
+        "export SOPS_AGE_KEY_FILE=/home/ryan/.config/sops/age/keys.txt; export SLACK_BOT_TOKEN=$(nix shell nixpkgs#sops --command sops -d ~/nixos/hosts/server/secrets.yaml | awk '/slack_bot_token:/ {print $2}'); export SLACK_TEAM_ID=$(nix shell nixpkgs#sops --command sops -d ~/nixos/hosts/server/secrets.yaml | awk '/slack_team_id:/ {print $2}'); exec nix shell nixpkgs#nodejs --command npx -y @modelcontextprotocol/server-slack"
+      ]
+    }
+  }
+}
