@@ -41,6 +41,10 @@
     };
   };
 
+  services.nginx.virtualHosts."server".listen = [
+    { addr = "0.0.0.0"; port = 5000; }
+  ];
+
   # Open port for Frigate UI
   networking.firewall.allowedTCPPorts = [ 5000 ];
 }
