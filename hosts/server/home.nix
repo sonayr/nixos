@@ -14,6 +14,10 @@
     source = ../../opencode/skill;
     recursive = true;
   };
+  
+  xdg.configFile."opencode/config.json" = {
+    source = ../../opencode/config.json;
+  };
 
 
 # Let Home Manager install and manage itself.

@@ -12,6 +12,7 @@
       ../../services/system/nixarr.nix
       ../../services/system/monitoring.nix
       ../../services/system/paperless.nix
+      ../../services/system/frigate.nix
     ];
 
   # Bootloader.
@@ -173,10 +174,24 @@
   sops.defaultSopsFormat = "yaml";
   sops.age.keyFile = "/home/ryan/.config/sops/age/keys.txt";
 
+  sops.secrets.frigate_camera_password = { };
   sops.secrets.todoist_api_token = { owner = "ryan"; };
   sops.secrets.todoist_client_secret = { owner = "ryan"; };
   sops.secrets.cloudflare_credentials = { };
   sops.secrets.wg_conf = { };
+  sops.secrets.slack_bot_token = { owner = "ryan"; };
+  sops.secrets.slack_team_id = { owner = "ryan"; };
+  sops.secrets.confluence_api_token = { owner = "ryan"; };
+
+  sops.templates."mcp_env" = {
+    owner = "ryan";
+    mode = "0400";
+    content = ''
+      export SLACK_BOT_TOKEN="''${config.sops.placeholder.slack_bot_token}"
+      export SLACK_TEAM_ID="''${config.sops.placeholder.slack_team_id}"
+      export CONFLUENCE_API_TOKEN="''${config.sops.placeholder.confluence_api_token}"
+    '';
+  };
 
   # --- Todoist Opencode Bridge Configuration ---
   services.todoist-opencode-bridge = {
@@ -212,6 +227,9 @@
         { command = "/run/current-system/sw/bin/chown"; options = [ "NOPASSWD" ]; }
         { command = "/run/wrappers/bin/chmod"; options = [ "NOPASSWD" ]; }
         { command = "/run/current-system/sw/bin/chmod"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/fsck.ext4"; options = [ "NOPASSWD" ]; }
+        { command = "/run/wrappers/bin/blkid"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/blkid"; options = [ "NOPASSWD" ]; }
       ];
     }
   ];
