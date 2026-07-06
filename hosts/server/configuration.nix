@@ -183,6 +183,14 @@
   sops.secrets.slack_team_id = { owner = "ryan"; };
   sops.secrets.confluence_api_token = { owner = "ryan"; };
 
+  sops.templates."frigate_env" = {
+    owner = "ryan";
+    mode = "0400";
+    content = ''
+      FRIGATE_CAMERA_PASSWORD="${config.sops.placeholder.frigate_camera_password}"
+    '';
+  };
+
   sops.templates."mcp_env" = {
     owner = "ryan";
     mode = "0400";
