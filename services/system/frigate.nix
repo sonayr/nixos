@@ -5,6 +5,31 @@
     config.sops.templates."frigate_env".path
   ];
 
+  # Make go2rtc aware of the password
+  systemd.services.go2rtc.serviceConfig.EnvironmentFile = [
+    config.sops.templates."frigate_env".path
+  ];
+
+  services.go2rtc = {
+    enable = true;
+    settings = {
+      rtsp = {
+        listen = ":8554";
+      };
+      webrtc = {
+        listen = ":8555";
+      };
+      streams = {
+        doorbell = [
+          "rtsp://admin:\${FRIGATE_CAMERA_PASSWORD}@192.168.5.68:554/h264Preview_01_main"
+        ];
+        doorbell_sub = [
+          "rtsp://admin:\${FRIGATE_CAMERA_PASSWORD}@192.168.5.68:554/h264Preview_01_sub"
+        ];
+      };
+    };
+  };
+
   services.frigate = {
     enable = true;
     hostname = "server";
@@ -14,21 +39,17 @@
         enabled = false;
       };
 
-      go2rtc = {
-        streams = {
-          doorbell = [
-            "rtsp://admin:{FRIGATE_CAMERA_PASSWORD}@192.168.5.68:554/h264Preview_01_main"
-          ];
-        };
-      };
-
       cameras = {
         doorbell = {
           ffmpeg = {
             inputs = [
               {
                 path = "rtsp://127.0.0.1:8554/doorbell";
-                roles = [ "record" "detect" ];
+                roles = [ "record" ];
+              }
+              {
+                path = "rtsp://127.0.0.1:8554/doorbell_sub";
+                roles = [ "detect" ];
               }
             ];
           };
