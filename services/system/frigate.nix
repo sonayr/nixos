@@ -1,9 +1,14 @@
 { config, pkgs, ... }:
 
 {
-  systemd.services.frigate.serviceConfig.EnvironmentFile = [
-    config.sops.templates."frigate_env".path
-  ];
+  systemd.services.frigate = {
+    serviceConfig.EnvironmentFile = [
+      config.sops.templates."frigate_env".path
+    ];
+    serviceConfig.ExecStartPre = [
+      "+/bin/sh -c 'rm -f /dev/shm/doorbell*'"
+    ];
+  };
 
   # Make go2rtc aware of the password
   systemd.services.go2rtc.serviceConfig.EnvironmentFile = [
@@ -36,7 +41,9 @@
 
     settings = {
       mqtt = {
-        enabled = false;
+        enabled = true;
+        host = "127.0.0.1";
+        port = 1883;
       };
 
       cameras = {
