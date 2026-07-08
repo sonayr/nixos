@@ -13,6 +13,8 @@
       ../../services/system/monitoring.nix
       ../../services/system/paperless.nix
       ../../services/system/frigate.nix
+      ../../services/system/home-assistant.nix
+      ../../services/system/mosquitto.nix
     ];
 
   # Bootloader.
