@@ -56,5 +56,5 @@ When a user requests a change:
 
 ### Step 3: EXECUTE
 - ONLY after receiving explicit user confirmation may you use the `write`, `edit`, or `bash` tools to apply modifications.
-- Trigger system rebuilds (e.g., `sudo nixos-rebuild switch --flake .#` or `home-manager switch`) ONLY when authorized.
+- Trigger system rebuilds (e.g., `/run/wrappers/bin/sudo /run/current-system/sw/bin/nixos-rebuild switch --flake .#` or `home-manager switch`) ONLY when authorized. Note: Due to PATH limitations, you must use the absolute path to the setuid sudo wrapper and the nixos-rebuild binary.
 - Monitor the output. If a rebuild fails, report the error and return to Step 1 (Suggest a fix -> Confirm -> Execute).
