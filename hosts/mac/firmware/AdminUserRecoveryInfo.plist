@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ryano</key>
+	<dict>
+		<key>AuthenticationAuthority</key>
+		<array>
+			<string>;ShadowHash;HASHLIST:&lt;SALTED-SHA512-PBKDF2,SRP-RFC5054-4096-SHA512-PBKDF2&gt;</string>
+			<string>;SecureToken;</string>
+			<string>;Kerberosv5;;ryano@LKDC:SHA1.202E7761D080635BE2A118F8D4EA6F38AAB50B0A;LKDC:SHA1.202E7761D080635BE2A118F8D4EA6F38AAB50B0A;</string>
+		</array>
+		<key>GeneratedUID</key>
+		<string>B665A742-F811-4263-88FA-417AD0027D04</string>
+		<key>RealName</key>
+		<string>Ryan</string>
+	</dict>
+</dict>
+</plist>
