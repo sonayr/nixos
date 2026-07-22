@@ -7,7 +7,7 @@ This repository contains my declarative [NixOS](https://nixos.org/) system confi
 This repository currently defines two main system configurations:
 
 *   **`laptop`**: Personal workstation/laptop configuration. Uses `home-manager` for user-specific environment and dotfiles management.
-*   **`server`**: Home server configuration. Runs various self-hosted services and a media server stack.
+*   **`server`**: Home server configuration. Runs various self-hosted services (e.g. Home Assistant, Frigate, Mosquitto) and a media server stack.
 
 ## ✨ Key Features & Integrations
 
