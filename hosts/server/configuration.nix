@@ -11,7 +11,6 @@
       ./hardware-configuration.nix
       ../../services/system/nixarr.nix
       ../../services/system/monitoring.nix
-      ../../services/system/paperless.nix
       ../../services/system/frigate.nix
       ../../services/system/home-assistant.nix
       ../../services/system/mosquitto.nix
@@ -155,6 +154,7 @@
       "minfreespace=50G"
       "fsname=mergerfs"
       "allow_other"
+      "nofail"
     ];
   };
 
@@ -221,6 +221,7 @@
   services.cloudflared.tunnels."todoist-webhook".ingress = {
     "jelly.onayr.com" = "http://localhost:8096";
     "seer.onayr.com" = "http://localhost:5055";
+    "ha.onayr.com" = "http://localhost:8123";
   };
 
   # Allow passwordless sudo for nix operations and systemctl

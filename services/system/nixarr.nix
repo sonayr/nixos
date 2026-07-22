@@ -70,53 +70,9 @@
     port = 8191;
   };
 
-  # 8083 for Calibre-Web, 8084 for Shelfmark, 8191 for FlareSolverr, 8096 for Jellyfin
-  networking.firewall.allowedTCPPorts = [ 8083 8084 8191 8096 ];
+  # 8191 for FlareSolverr, 8096 for Jellyfin
+  networking.firewall.allowedTCPPorts = [ 8191 8096 ];
 
   # 1900, 7359 for Jellyfin DLNA and discovery
   networking.firewall.allowedUDPPorts = [ 1900 7359 ];
-
-  services.calibre-web = {
-    enable = true;
-    listen = {
-      ip = "0.0.0.0"; # Or "127.0.0.1" if using a reverse proxy
-      port = 8083;
-    };
-    options = {
-      calibreLibrary = "/mnt/storage-pool/media/library/books";
-      enableBookUploading = true;
-      enableBookConversion = true;
-    };
-  };
-
-  systemd.services.shelfmark = {
-    description = "Shelfmark - Web interface for Calibre-Web";
-    after = [ "network.target" "calibre-web.service" ];
-    wantedBy = [ "multi-user.target" ];
-    
-    environment = {
-      FLASK_HOST = "0.0.0.0";
-      FLASK_PORT = "8084";
-      CONFIG_DIR = "/var/lib/shelfmark";
-      CWA_DB_PATH = "/var/lib/calibre-web/app.db";
-      INGEST_DIR = "/mnt/storage-pool/media/library/books";
-      TMP_DIR = "/var/lib/shelfmark/tmp";
-    };
-
-    serviceConfig = {
-      Type = "simple";
-      User = "calibre-web";
-      Group = "calibre-web";
-      ExecStart = "${pkgs.shelfmark}/bin/shelfmark --bind 0.0.0.0:8084";
-      Restart = "on-failure";
-      StateDirectory = "shelfmark";
-      LogsDirectory = "shelfmark";
-      WorkingDirectory = "/var/lib/shelfmark";
-      
-      # Security hardening (optional but recommended)
-      ProtectSystem = "strict";
-      ProtectHome = "read-only";
-      ReadWritePaths = [ "/var/lib/shelfmark" "/mnt/storage-pool/media/library/books" "/var/lib/calibre-web" ];
-    };
-  };
 }

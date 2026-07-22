@@ -49,6 +49,7 @@
       cameras = {
         doorbell = {
           ffmpeg = {
+            hwaccel_args = "preset-nvidia-h264";
             inputs = [
               {
                 path = "rtsp://127.0.0.1:8554/doorbell";

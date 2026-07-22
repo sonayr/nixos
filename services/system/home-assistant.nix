@@ -13,28 +13,14 @@
     ];
     config = {
       default_config = {};
-      automation = [
-        {
-          alias = "Notify on Doorbell Person Detection";
-          trigger = [
-            {
-              platform = "state";
-              entity_id = "binary_sensor.doorbell_person_occupancy";
-              from = "off";
-              to = "on";
-            }
-          ];
-          action = [
-            {
-              service = "notify.mobile_app_ryans_samsung";
-              data = {
-                title = "Motion Alert";
-                message = "A person was detected at the doorbell!";
-              };
-            }
-          ];
-        }
-      ];
+      http = {
+        use_x_forwarded_for = true;
+        trusted_proxies = [
+          "127.0.0.1"
+          "::1"
+        ];
+      };
+      automation = "!include automations.yaml";
     };
   };
   networking.firewall.allowedTCPPorts = [ 8123 ];
