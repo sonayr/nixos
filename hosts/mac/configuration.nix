@@ -23,8 +23,10 @@
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
-  
-  hardware.asahi.peripheralFirmwareDirectory = ./firmware;
+  hardware.asahi = {
+   enable = true;
+   peripheralFirmwareDirectory = ./firmware;
+  };
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
