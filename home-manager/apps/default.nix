@@ -6,6 +6,8 @@
     ./obsidian.nix
     ./mako.nix
     ./cliTools.nix
+    ./ghostty.nix
+    ./hyprland.nix
   ];
 
   home.packages = with pkgs; [

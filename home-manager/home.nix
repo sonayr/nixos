@@ -35,10 +35,8 @@
   # plain files is through 'home.file'.
   home.file = {
     ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/nvim/.config/nvim";
-    ".config/hypr/hyprland.conf" = {
-      source = if osConfig.networking.hostName == "mac" 
-        then config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/mac-hyprland.conf"
-        else config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/laptop-hyprland.conf";
+    ".config/hypr/hyprland.conf" = pkgs.lib.mkIf (osConfig.networking.hostName != "mac") {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/laptop-hyprland.conf";
       force = true;
     };
     ".config/hypr/hyprpaper.conf" = {
