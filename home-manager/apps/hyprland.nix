@@ -5,139 +5,126 @@ let
 in
 {
   config = lib.mkIf isMac {
-    wayland.windowManager.hyprland = {
-      enable = true;
-      package = null;
-      portalPackage = null;
-      systemd.enable = false;
-      
-      settings = {
-        monitor = ",preferred,auto,1";
+    # Instead of using the Home Manager Wayland Window Manager module which can 
+    # conflict with system-level setups, we will write the config manually
+    # to maintain strict compatibility with Asahi Linux SDDM expectations.
+    xdg.configFile."hypr/hyprland.conf".text = ''
+      # -----------------------------------------------------
+      # Generated Hyprland Base Configuration for Mac Host
+      # -----------------------------------------------------
+      monitor=,preferred,auto,1
 
-        exec-once = [
-          "waybar"
-          "hyprpaper"
-          "hypridle"
-          "copyq --start-server"
-        ];
+      exec-once = waybar
+      exec-once = hyprpaper
+      exec-once = hypridle
+      exec-once = copyq --start-server
 
-        "$terminal" = "ghostty";
-        "$menu" = "wofi --show drun";
-        "$fileManager" = "thunar";
+      $terminal = ghostty
+      $menu = wofi --show drun
+      $fileManager = thunar
 
-        env = [
-          "XCURSOR_SIZE,24"
-          "QT_QPA_PLATFORMTHEME,qt5ct"
-        ];
+      env = XCURSOR_SIZE,24
+      env = QT_QPA_PLATFORMTHEME,qt5ct
 
-        input = {
-          kb_layout = "us";
-          kb_variant = "";
-          kb_model = "";
-          kb_options = "";
-          kb_rules = "";
+      input {
+          kb_layout = us
+          kb_variant =
+          kb_model =
+          kb_options =
+          kb_rules =
 
-          follow_mouse = 1;
+          follow_mouse = 1
 
-          touchpad = {
-            natural_scroll = true;
-            tap-to-click = true;
-            clickfinger_behavior = true;
-          };
+          touchpad {
+              natural_scroll = true
+              tap-to-click = true
+              clickfinger_behavior = true
+          }
 
-          sensitivity = 0;
-        };
+          sensitivity = 0
+      }
 
-        gestures = {
-          workspace_swipe = true;
-          workspace_swipe_fingers = 3;
-        };
+      gestures {
+          workspace_swipe = true
+          workspace_swipe_fingers = 3
+      }
 
-        general = {
-          gaps_in = 5;
-          gaps_out = 10;
-          border_size = 2;
-          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
-          layout = "dwindle";
-        };
+      general {
+          gaps_in = 5
+          gaps_out = 10
+          border_size = 2
+          col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+          col.inactive_border = rgba(595959aa)
+          layout = dwindle
+      }
 
-        decoration = {
-          rounding = 10;
-          blur = {
-            enabled = true;
-            size = 3;
-            passes = 1;
-          };
-          shadow = {
-            enabled = true;
-            range = 4;
-            render_power = 3;
-            color = "rgba(1a1a1aee)";
-          };
-        };
+      decoration {
+          rounding = 10
+          blur {
+              enabled = true
+              size = 3
+              passes = 1
+          }
+          shadow {
+              enabled = true
+              range = 4
+              render_power = 3
+              color = rgba(1a1a1aee)
+          }
+      }
 
-        dwindle = {
-          pseudotile = true;
-          preserve_split = true;
-        };
+      dwindle {
+          pseudotile = true
+          preserve_split = true
+      }
 
-        misc = {
-          disable_hyprland_logo = true;
-        };
+      misc {
+          disable_hyprland_logo = true
+      }
 
-        "$mod" = "SUPER";
+      $mod = SUPER
 
-        bind = [
-          "$mod, T, exec, $terminal"
-          "$mod, Q, killactive,"
-          "$mod, M, exit,"
-          "$mod, E, exec, $fileManager"
-          "$mod, V, togglefloating,"
-          "$mod, Space, exec, $menu"
-          "$mod, P, pseudo,"
-          "$mod, J, togglesplit,"
+      bind = $mod, T, exec, $terminal
+      bind = $mod, Q, killactive,
+      bind = $mod, M, exit,
+      bind = $mod, E, exec, $fileManager
+      bind = $mod, V, togglefloating,
+      bind = $mod, Space, exec, $menu
+      bind = $mod, P, pseudo,
+      bind = $mod, J, togglesplit,
 
-          "$mod, left, movefocus, l"
-          "$mod, right, movefocus, r"
-          "$mod, up, movefocus, u"
-          "$mod, down, movefocus, d"
+      bind = $mod, left, movefocus, l
+      bind = $mod, right, movefocus, r
+      bind = $mod, up, movefocus, u
+      bind = $mod, down, movefocus, d
 
-          "$mod, 1, workspace, 1"
-          "$mod, 2, workspace, 2"
-          "$mod, 3, workspace, 3"
-          "$mod, 4, workspace, 4"
-          "$mod, 5, workspace, 5"
+      bind = $mod, 1, workspace, 1
+      bind = $mod, 2, workspace, 2
+      bind = $mod, 3, workspace, 3
+      bind = $mod, 4, workspace, 4
+      bind = $mod, 5, workspace, 5
 
-          "$mod SHIFT, 1, movetoworkspace, 1"
-          "$mod SHIFT, 2, movetoworkspace, 2"
-          "$mod SHIFT, 3, movetoworkspace, 3"
-          "$mod SHIFT, 4, movetoworkspace, 4"
-          "$mod SHIFT, 5, movetoworkspace, 5"
+      bind = $mod SHIFT, 1, movetoworkspace, 1
+      bind = $mod SHIFT, 2, movetoworkspace, 2
+      bind = $mod SHIFT, 3, movetoworkspace, 3
+      bind = $mod SHIFT, 4, movetoworkspace, 4
+      bind = $mod SHIFT, 5, movetoworkspace, 5
 
-          "$mod, mouse_down, workspace, e+1"
-          "$mod, mouse_up, workspace, e-1"
-        ];
+      bind = $mod, mouse_down, workspace, e+1
+      bind = $mod, mouse_up, workspace, e-1
 
-        bindm = [
-          "$mod, mouse:272, movewindow"
-          "$mod, mouse:273, resizewindow"
-        ];
+      bindm = $mod, mouse:272, movewindow
+      bindm = $mod, mouse:273, resizewindow
 
-        bindel = [
-          ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-          ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          ", XF86MonBrightnessUp, exec, brightnessctl s 5%+"
-          ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
-        ];
+      bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+      bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bindel = , XF86MonBrightnessUp, exec, brightnessctl s 5%+
+      bindel = , XF86MonBrightnessDown, exec, brightnessctl s 5%-
 
-        bindl = [
-          ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ", XF86AudioPlay, exec, playerctl play-pause"
-          ", XF86AudioNext, exec, playerctl next"
-          ", XF86AudioPrev, exec, playerctl previous"
-        ];
-      };
-    };
+      bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+      bindl = , XF86AudioPlay, exec, playerctl play-pause
+      bindl = , XF86AudioNext, exec, playerctl next
+      bindl = , XF86AudioPrev, exec, playerctl previous
+    '';
   };
 }
