@@ -45,8 +45,12 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Enable Hyprland
+  programs.hyprland.enable = true;
 
-  
+  # Enable a display manager (SDDM is commonly used with Hyprland)
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -55,11 +59,12 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  # Enable sound.
-  #services.pulseaudio.enable = true;
-  # OR
+  # Enable sound with pipewire
+  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
     pulse.enable = true;
   };
 
@@ -129,4 +134,3 @@
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }
-
