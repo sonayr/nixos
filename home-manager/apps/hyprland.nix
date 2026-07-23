@@ -8,6 +8,7 @@ in
     wayland.windowManager.hyprland = {
       enable = true;
       package = null;
+      portalPackage = null;
       systemd.enable = false;
       
       settings = {
@@ -48,6 +49,8 @@ in
         };
 
         gestures = {
+          workspace_swipe = true;
+          workspace_swipe_fingers = 3;
         };
 
         general = {
