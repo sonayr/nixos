@@ -69,7 +69,7 @@
   };
   nixpkgs.config.allowUnfree = true;
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ryan = {
@@ -79,16 +79,6 @@
       tree
     ];
     password = "test";
-  };
-
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users = {
-      ryan = import ../../home-manager/home.nix;
-    };
-    backupFileExtension = "backup";
   };
 
   # programs.firefox.enable = true;

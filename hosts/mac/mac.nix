@@ -1,4 +1,4 @@
-{ nixpkgs, home-manager, inputs, ... }:
+{ nixpkgs, inputs, ... }:
 
 
 nixpkgs.lib.nixosSystem {
@@ -7,6 +7,5 @@ nixpkgs.lib.nixosSystem {
   modules = [
     inputs.apple-silicon.nixosModules.default
     ./configuration.nix
-    home-manager.nixosModules.home-manager
   ];
 }
