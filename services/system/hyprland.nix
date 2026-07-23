@@ -22,6 +22,8 @@
     };
   };
 
+  hardware.graphics.enable = true;
+
   programs = {
 
     hyprland = {
