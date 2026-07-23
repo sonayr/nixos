@@ -1,4 +1,4 @@
-{ config, pkgs, self, ... }:
+{ config, pkgs, self, osConfig ? null, ... }:
 {
   imports = [
     ./apps
@@ -35,9 +35,20 @@
   # plain files is through 'home.file'.
   home.file = {
     ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/nvim/.config/nvim";
-    ".config/hypr/" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr";
+    ".config/hypr/hyprland.conf" = {
+      source = if osConfig.networking.hostName == "mac" 
+        then config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/mac-hyprland.conf"
+        else config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/laptop-hyprland.conf";
       force = true;
+    };
+    ".config/hypr/hyprpaper.conf" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/hyprpaper.conf";
+    };
+    ".config/hypr/ocarina.jpg" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/ocarina.jpg";
+    };
+    ".config/hypr/scripts" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/scripts";
     };
     ".config/waybar" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/waybar/.config/waybar";
