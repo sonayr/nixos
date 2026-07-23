@@ -7,6 +7,8 @@ in
   config = lib.mkIf isMac {
     wayland.windowManager.hyprland = {
       enable = true;
+      package = null;
+      systemd.enable = false;
       
       settings = {
         monitor = ",preferred,auto,1";
