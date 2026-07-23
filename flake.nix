@@ -14,6 +14,10 @@
     todoist-bridge.inputs.nixpkgs.follows = "nixpkgs";
     nixarr.url = "github:nix-media-server/nixarr";
     nixarr.inputs.nixpkgs.follows = "nixpkgs";
+    apple-silicon = {
+      url = "github:tpwrules/nixos-apple-silicon";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, sops-nix, todoist-bridge, nixarr, ... } @ inputs:
