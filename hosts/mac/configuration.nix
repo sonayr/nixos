@@ -52,6 +52,14 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      hyprland = prev.hyprland.override {
+        libgbm = prev.mesa;
+      };
+    })
+  ];
+
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
