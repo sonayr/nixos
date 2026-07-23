@@ -3,12 +3,10 @@
 
   environment = {
     systemPackages = with pkgs; [
-      hyprland
       hyprlock
       hyprpicker
       inotify-tools
       waybar
-      libglvnd
       hyprshot
       hyprpaper
       wofi
@@ -18,6 +16,10 @@
       playerctl
       brightnessctl
     ];
+    sessionVariables = {
+      # Workaround for Hyprland 0.54.0+ crash on Asahi Linux (drmModifierName null pointer)
+      AQ_NO_MODIFIERS = "1";
+    };
   };
 
   programs = {
