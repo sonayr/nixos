@@ -5,126 +5,148 @@ let
 in
 {
   config = lib.mkIf isMac {
-    # Instead of using the Home Manager Wayland Window Manager module which can 
-    # conflict with system-level setups, we will write the config manually
-    # to maintain strict compatibility with Asahi Linux SDDM expectations.
     xdg.configFile."hypr/hyprland.conf".text = ''
-      # -----------------------------------------------------
-      # Generated Hyprland Base Configuration for Mac Host
-      # -----------------------------------------------------
-      monitor=,preferred,auto,1
+# -----------------------------------------------------
+# Hyprland Base Configuration for Mac Host (Asahi Linux)
+# -----------------------------------------------------
 
-      exec-once = waybar
-      exec-once = hyprpaper
-      exec-once = hypridle
-      exec-once = copyq --start-server
+# -- Monitors --
+# If you have a Retina display, you may want to change the scaling to '2'
+# e.g., monitor=,preferred,auto,2
+monitor=,preferred,auto,1
 
-      $terminal = ghostty
-      $menu = wofi --show drun
-      $fileManager = thunar
+# -- Autostart --
+# These utilize the packages already in your services/system/hyprland.nix
+exec-once = waybar
+exec-once = hyprpaper
+exec-once = hypridle
+exec-once = copyq --start-server
 
-      env = XCURSOR_SIZE,24
-      env = QT_QPA_PLATFORMTHEME,qt5ct
+# -- Programs --
+$terminal = ghostty
+$menu = wofi --show drun
+$fileManager = thunar
 
-      input {
-          kb_layout = us
-          kb_variant =
-          kb_model =
-          kb_options =
-          kb_rules =
+# -- Environment Variables --
+env = XCURSOR_SIZE,24
+env = QT_QPA_PLATFORMTHEME,qt5ct
 
-          follow_mouse = 1
+# -- Input & Keyboard --
+input {
+    kb_layout = us
+    kb_variant =
+    kb_model =
+    kb_options =
+    kb_rules =
 
-          touchpad {
-              natural_scroll = true
-              tap-to-click = true
-              clickfinger_behavior = true
-          }
+    follow_mouse = 1
 
-          sensitivity = 0
-      }
+    touchpad {
+        natural_scroll = true      # Standard Mac behavior
+        tap-to-click = true
+        clickfinger_behavior = true
+    }
 
-      gestures {
-          workspace_swipe = true
-          workspace_swipe_fingers = 3
-      }
+    sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+}
 
-      general {
-          gaps_in = 5
-          gaps_out = 10
-          border_size = 2
-          col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-          col.inactive_border = rgba(595959aa)
-          layout = dwindle
-      }
+# Gestures (Optimized for Mac trackpads)
+gestures {
+    workspace_swipe = true
+    workspace_swipe_fingers = 3
+}
 
-      decoration {
-          rounding = 10
-          blur {
-              enabled = true
-              size = 3
-              passes = 1
-          }
-          shadow {
-              enabled = true
-              range = 4
-              render_power = 3
-              color = rgba(1a1a1aee)
-          }
-      }
+# -- General --
+general {
+    gaps_in = 5
+    gaps_out = 10
+    border_size = 2
+    col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+    col.inactive_border = rgba(595959aa)
+    layout = dwindle
+}
 
-      dwindle {
-          pseudotile = true
-          preserve_split = true
-      }
+# -- Decoration --
+decoration {
+    rounding = 10
+    blur {
+        enabled = true
+        size = 3
+        passes = 1
+    }
+    drop_shadow = yes
+    shadow_range = 4
+    shadow_render_power = 3
+    col.shadow = rgba(1a1a1aee)
+}
 
-      misc {
-          disable_hyprland_logo = true
-      }
+# -- Dwindle Layout --
+dwindle {
+    pseudotile = yes
+    preserve_split = yes
+}
 
-      $mod = SUPER
+# -- Misc --
+misc {
+    disable_hyprland_logo = true
+}
 
-      bind = $mod, T, exec, $terminal
-      bind = $mod, Q, killactive,
-      bind = $mod, M, exit,
-      bind = $mod, E, exec, $fileManager
-      bind = $mod, V, togglefloating,
-      bind = $mod, Space, exec, $menu
-      bind = $mod, P, pseudo,
-      bind = $mod, J, togglesplit,
+# -- Bindings --
+# Mac Command key is mapped to SUPER by default in most Asahi setups
+$mod = SUPER
 
-      bind = $mod, left, movefocus, l
-      bind = $mod, right, movefocus, r
-      bind = $mod, up, movefocus, u
-      bind = $mod, down, movefocus, d
+# Basic Binds
+bind = $mod, T, exec, $terminal
+bind = $mod, Q, killactive, 
+bind = $mod, M, exit, 
+bind = $mod, E, exec, $fileManager
+bind = $mod, V, togglefloating, 
+bind = $mod, Space, exec, $menu
+bind = $mod, P, pseudo, # dwindle
+bind = $mod, J, togglesplit, # dwindle
 
-      bind = $mod, 1, workspace, 1
-      bind = $mod, 2, workspace, 2
-      bind = $mod, 3, workspace, 3
-      bind = $mod, 4, workspace, 4
-      bind = $mod, 5, workspace, 5
+# Move focus
+bind = $mod, left, movefocus, l
+bind = $mod, right, movefocus, r
+bind = $mod, up, movefocus, u
+bind = $mod, down, movefocus, d
 
-      bind = $mod SHIFT, 1, movetoworkspace, 1
-      bind = $mod SHIFT, 2, movetoworkspace, 2
-      bind = $mod SHIFT, 3, movetoworkspace, 3
-      bind = $mod SHIFT, 4, movetoworkspace, 4
-      bind = $mod SHIFT, 5, movetoworkspace, 5
+# Workspaces
+bind = $mod, 1, workspace, 1
+bind = $mod, 2, workspace, 2
+bind = $mod, 3, workspace, 3
+bind = $mod, 4, workspace, 4
+bind = $mod, 5, workspace, 5
 
-      bind = $mod, mouse_down, workspace, e+1
-      bind = $mod, mouse_up, workspace, e-1
+# Move active window to a workspace
+bind = $mod SHIFT, 1, movetoworkspace, 1
+bind = $mod SHIFT, 2, movetoworkspace, 2
+bind = $mod SHIFT, 3, movetoworkspace, 3
+bind = $mod SHIFT, 4, movetoworkspace, 4
+bind = $mod SHIFT, 5, movetoworkspace, 5
 
-      bindm = $mod, mouse:272, movewindow
-      bindm = $mod, mouse:273, resizewindow
+# Scroll through existing workspaces
+bind = $mod, mouse_down, workspace, e+1
+bind = $mod, mouse_up, workspace, e-1
 
-      bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-      bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-      bindel = , XF86MonBrightnessUp, exec, brightnessctl s 5%+
-      bindel = , XF86MonBrightnessDown, exec, brightnessctl s 5%-
+# Move/resize windows with mouse
+bindm = $mod, mouse:272, movewindow
+bindm = $mod, mouse:273, resizewindow
 
-      bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-      bindl = , XF86AudioPlay, exec, playerctl play-pause
-      bindl = , XF86AudioNext, exec, playerctl next
-      bindl = , XF86AudioPrev, exec, playerctl previous
+# Mac Media Keys & Hardware Controls
+# Volume (Pipewire)
+bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+
+# Screen Brightness (brightnessctl)
+bindel = , XF86MonBrightnessUp, exec, brightnessctl s 5%+
+bindel = , XF86MonBrightnessDown, exec, brightnessctl s 5%-
+
+# Media Control (playerctl)
+bindl = , XF86AudioPlay, exec, playerctl play-pause
+bindl = , XF86AudioNext, exec, playerctl next
+bindl = , XF86AudioPrev, exec, playerctl previous
     '';
   };
 }
