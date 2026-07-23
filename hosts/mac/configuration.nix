@@ -67,7 +67,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-
+  nixpkgs.config.allowUnfree = true;
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
@@ -78,6 +78,7 @@
     packages = with pkgs; [
       tree
     ];
+    password = "test";
   };
 
   home-manager = {
