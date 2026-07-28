@@ -52,13 +52,9 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
 
-  nixpkgs.overlays = [
-    (final: prev: {
-      hyprland = prev.hyprland.override {
-        libgbm = prev.mesa;
-      };
-    })
-  ];
+  # Cachix for nixos-apple-silicon
+  nix.settings.extra-substituters = [ "https://nixos-apple-silicon.cachix.org" ];
+  nix.settings.extra-trusted-public-keys = [ "nixos-apple-silicon.cachix.org-1:aU2//bfbJsE1f4lE51aE6lX2+I6YgJp3Z/h54j6GzNE=" ];
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
