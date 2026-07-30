@@ -18,6 +18,12 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
 
+  # Fix Apple Keyboard layout (Command = SUPER, Option = ALT)
+  boot.extraModprobeConfig = ''
+    options hid_apple swap_opt_cmd=0
+  '';
+
+
   networking.hostName = "mac"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
