@@ -4,9 +4,11 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      "$mod" = "SUPER";
-      "$terminal" = "ghostty"; # Or whichever terminal you prefer
-      "$menu" = "wofi --show drun";
+      # Use _var to generate Lua variables instead of "$mod" = "SUPER"
+      # The empty key name causes it to use the attribute name ("mod") as the variable name.
+      "mod" = { _var = true; name = "mod"; value = "SUPER"; };
+      "terminal" = { _var = true; name = "terminal"; value = "ghostty"; };
+      "menu" = { _var = true; name = "menu"; value = "wofi --show drun"; };
 
       monitor = [
         ",preferred,auto,1"
@@ -32,16 +34,16 @@
       };
 
       bind = [
-        "$mod, T, exec, $terminal"
-        "$mod, Q, killactive,"
-        "$mod, M, exit,"
-        "$mod, V, togglefloating,"
-        "$mod, Space, exec, $menu"
+        (pkgs.lib.generators.mkLuaInline ''mod .. ", T, exec, " .. terminal'')
+        (pkgs.lib.generators.mkLuaInline ''mod .. ", Q, killactive,"'')
+        (pkgs.lib.generators.mkLuaInline ''mod .. ", M, exit,"'')
+        (pkgs.lib.generators.mkLuaInline ''mod .. ", V, togglefloating,"'')
+        (pkgs.lib.generators.mkLuaInline ''mod .. ", Space, exec, " .. menu'')
       ];
       
       bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
+        (pkgs.lib.generators.mkLuaInline ''mod .. ", mouse:272, movewindow"'')
+        (pkgs.lib.generators.mkLuaInline ''mod .. ", mouse:273, resizewindow"'')
       ];
     };
   };
