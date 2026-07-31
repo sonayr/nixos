@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../../home-manager/apps/ghostty.nix
     ./hyprland.nix
   ];
 

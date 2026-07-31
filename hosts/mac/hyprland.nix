@@ -5,7 +5,7 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
-      "$terminal" = "kitty"; # Or whichever terminal you prefer
+      "$terminal" = "ghostty"; # Or whichever terminal you prefer
       "$menu" = "wofi --show drun";
 
       monitor = [
