@@ -3,10 +3,11 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
+    configType = "hyprlang";
     settings = {
-      "mod" = { _var = "SUPER"; };
-      "terminal" = { _var = "ghostty"; };
-      "menu" = { _var = "wofi --show drun"; };
+      "$mod" = "SUPER";
+      "$terminal" = "ghostty";
+      "$menu" = "wofi --show drun";
 
       monitor = [
         ",preferred,auto,1"
@@ -32,16 +33,16 @@
       };
 
       bind = [
-        (pkgs.lib.generators.mkLuaInline ''mod .. ", T, exec, " .. terminal'')
-        (pkgs.lib.generators.mkLuaInline ''mod .. ", Q, killactive,"'')
-        (pkgs.lib.generators.mkLuaInline ''mod .. ", M, exit,"'')
-        (pkgs.lib.generators.mkLuaInline ''mod .. ", V, togglefloating,"'')
-        (pkgs.lib.generators.mkLuaInline ''mod .. ", Space, exec, " .. menu'')
+        "$mod, T, exec, $terminal"
+        "$mod, Q, killactive"
+        "$mod, M, exit"
+        "$mod, V, togglefloating"
+        "$mod, Space, exec, $menu"
       ];
       
       bindm = [
-        (pkgs.lib.generators.mkLuaInline ''mod .. ", mouse:272, movewindow"'')
-        (pkgs.lib.generators.mkLuaInline ''mod .. ", mouse:273, resizewindow"'')
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
       ];
     };
   };
