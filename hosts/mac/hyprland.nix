@@ -4,11 +4,9 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-      # Use _var to generate Lua variables instead of "$mod" = "SUPER"
-      # The empty key name causes it to use the attribute name ("mod") as the variable name.
-      "mod" = { _var = true; name = "mod"; value = "SUPER"; };
-      "terminal" = { _var = true; name = "terminal"; value = "ghostty"; };
-      "menu" = { _var = true; name = "menu"; value = "wofi --show drun"; };
+      "mod" = { _var = "SUPER"; };
+      "terminal" = { _var = "ghostty"; };
+      "menu" = { _var = "wofi --show drun"; };
 
       monitor = [
         ",preferred,auto,1"
