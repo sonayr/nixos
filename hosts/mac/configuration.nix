@@ -23,7 +23,6 @@
     options hid_apple swap_opt_cmd=0
   '';
 
-
   networking.hostName = "mac"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
@@ -33,6 +32,15 @@
    enable = true;
    peripheralFirmwareDirectory = ./firmware;
   };
+
+  home-manager = {
+    extraSpecialArgs = {inherit inputs; };
+    users = {
+     "ryan" = import ./home.nix;
+    };
+  };
+  
+  
   # Set your time zone.
   # time.timeZone = "Europe/Amsterdam";
 
@@ -58,17 +66,6 @@
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
 
-  # Cachix for nixos-apple-silicon
-  nix.settings.extra-substituters = [ "https://nixos-apple-silicon.cachix.org" ];
-  nix.settings.extra-trusted-public-keys = [ "nixos-apple-silicon.cachix.org-1:aU2//bfbJsE1f4lE51aE6lX2+I6YgJp3Z/h54j6GzNE=" ];
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   # Enable sound with pipewire
   security.rtkit.enable = true;
   services.pipewire = {
@@ -77,6 +74,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
   nixpkgs.config.allowUnfree = true;
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
@@ -91,8 +89,6 @@
     password = "test";
   };
 
-  # programs.firefox.enable = true;
-
   # List packages installed in system profile.
   # You can use https://search.nixos.org/ to find more packages (and options).
   environment.systemPackages = with pkgs; [
@@ -101,6 +97,7 @@
      git
    ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
