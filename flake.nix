@@ -27,5 +27,13 @@
         server = import ./hosts/server/server.nix { inherit inputs nixpkgs home-manager; };
         mac = import ./hosts/mac/mac.nix { inherit inputs nixpkgs home-manager; };
       };
+
+      homeConfigurations = {
+        "ryan@mac" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
+          extraSpecialArgs = { inherit inputs; };
+          modules = [ ./hosts/mac/home.nix ];
+        };
+      };
     };
 }

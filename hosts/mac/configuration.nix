@@ -32,13 +32,6 @@
    enable = true;
    peripheralFirmwareDirectory = ./firmware;
   };
-
-  home-manager = {
-    extraSpecialArgs = {inherit inputs; };
-    users = {
-     "ryan" = import ./home.nix;
-    };
-  };
   
   
   # Set your time zone.
