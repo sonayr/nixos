@@ -7,6 +7,7 @@
     settings = {
       "$mod" = "SUPER";
       "$terminal" = "ghostty";
+      "$browser" = "brave";
       "$menu" = "wofi --show drun";
 
       monitor = [
@@ -34,6 +35,7 @@
 
       bind = [
         "$mod, T, exec, $terminal"
+        "$mod, B, exec, $browser"
         "$mod, Q, killactive"
         "$mod, M, exit"
         "$mod, V, togglefloating"

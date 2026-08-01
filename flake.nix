@@ -7,6 +7,8 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     sfdx.url = "github:rfaulhaber/sfdx-nix";
     sfdx.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.url = "github:nix-community/nixvim";
+    nixvim.inputs.nixpkgs.follows  = "nixpkgs";
 
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -32,7 +34,10 @@
         "ryan@mac" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-linux;
           extraSpecialArgs = { inherit inputs; };
-          modules = [ ./hosts/mac/home.nix ];
+          modules = [ 
+	    ./hosts/mac/home.nix 
+	    inputs.nixvim.homeModules.nixvim
+	  ];
         };
       };
     };

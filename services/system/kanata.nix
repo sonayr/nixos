@@ -11,7 +11,7 @@
           )
           (defvar
             ;; Note: may need to change timing for pinikie vs index
-            tap-time 300
+            tap-time 200
             hold-time 250
           )
           (defalias

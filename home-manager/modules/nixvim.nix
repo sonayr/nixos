@@ -174,15 +174,15 @@
     extraPlugins = with pkgs.vimPlugins; [
       opencode-nvim
       snacks-nvim
-      (pkgs.vimUtils.buildVimPlugin {
-        name = "salesforce-nvim";
-        src = pkgs.fetchFromGitHub {
-          owner = "jonathanmorris180";
-          repo = "salesforce.nvim";
-          rev = "d9646e731f980513ebe95b426830cf9b1ca609cc"; # Adjust to latest if needed
-          hash = "sha256-a8KKCIh1DX1pFxIuelk3nCj/bRfe/+KfgIp6wu4jERc="; # Fake hash, will need update
-        };
-      })
+      #(pkgs.vimUtils.buildVimPlugin {
+        # name = "salesforce-nvim";
+        # src = pkgs.fetchFromGitHub {
+      #     owner = "jonathanmorris180";
+      #     repo = "salesforce.nvim";
+      #     rev = "d9646e731f980513ebe95b426830cf9b1ca609cc"; # Adjust to latest if needed
+      #     hash = "sha256-a8KKCIh1DX1pFxIuelk3nCj/bRfe/+KfgIp6wu4jERc="; # Fake hash, will need update
+      #   };
+      # })
     ];
 
     extraConfigLua = ''
