@@ -4,7 +4,7 @@
   imports = [
     ../../home-manager/apps/ghostty.nix
     ./hyprland.nix
-    ../../home-manager/apps/brave.nix
+    ../../home-manager/apps/default.nix
     ../../home-manager/modules/nixvim.nix
 
   ];

@@ -13,4 +13,5 @@
     todoist-electron
     gimp-with-plugins
   ];
+  nixpkgs.config.allowUnfree = true;
 }
