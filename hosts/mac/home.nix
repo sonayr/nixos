@@ -3,6 +3,7 @@
 {
   imports = [
     ../../home-manager/apps/ghostty.nix
+    ../../home-manager/apps/zsh.nix
     ./hyprland.nix
     ../../home-manager/apps/default.nix
     ../../home-manager/modules/nixvim.nix
