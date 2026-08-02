@@ -67,6 +67,10 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+    "nodejs-20.20.2"
+    "nodejs-slim-20.20.2"
+  ];
   programs.nix-ld.enable = true;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -156,6 +160,12 @@
       "allow_other"
       "nofail"
     ];
+  };
+
+  fileSystems."/var/lib/frigate" = {
+    device = "/mnt/disk/disk1/frigate";
+    options = [ "bind" "nofail" ];
+    fsType = "none";
   };
 
   systemd.tmpfiles.rules = [

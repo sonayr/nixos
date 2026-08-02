@@ -15,11 +15,10 @@
     sonarr.enable = true;
     radarr.enable = true;
     transmission.enable = true;
-    transmission.vpn.enable = true;
+    # transmission.vpn.enable = true;
     prowlarr.enable = true;
     jellyseerr.enable = true;
     bazarr.enable = true;
-    readarr.enable = false;
   };
 
   # Fix for Jellyfin "invalid language tag" error in admin dashboard

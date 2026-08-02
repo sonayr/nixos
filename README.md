@@ -14,6 +14,7 @@ This repository currently defines two main system configurations:
 *   **[Home Manager](https://github.com/nix-community/home-manager)**: Manages user configurations, dotfiles, and user-level packages declaratively.
 *   **[sops-nix](https://github.com/Mic92/sops-nix)**: Provides secure, encrypted secrets management using Mozilla SOPS and `age` keys, keeping secrets safe in the public repository.
 *   **[nixarr](https://github.com/nix-media-server/nixarr)**: Integrated media server suite for the home server.
+*   **Frigate NVR**: NVR configuration for home security. Media and database storage is mounted from the `mergerfs` storage pool to avoid filling up the root NVMe drive.
 *   **Custom Inputs**: Includes tailored environments like `sfdx-nix` and locally sourced applications like `todoist-bridge`.
 
 ## 📂 Repository Structure
