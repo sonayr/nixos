@@ -2,7 +2,7 @@
 
 nixpkgs.lib.nixosSystem {
   system = "x86_64-linux";
-  specialArgs = { inherit inputs; };
+  specialArgs = { inherit inputs; ags = inputs.ags; };
   modules = [
     inputs.sops-nix.nixosModules.sops
     inputs.todoist-bridge.nixosModules.default
@@ -12,7 +12,7 @@ nixpkgs.lib.nixosSystem {
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
-      home-manager.extraSpecialArgs = { inherit inputs; };
+      home-manager.extraSpecialArgs = { inherit inputs; ags = inputs.ags; };
       home-manager.users.ryan = import ./home.nix;
     }
   ];

@@ -7,6 +7,7 @@
     ./mako.nix
     ./cliTools.nix
     ./ghostty.nix
+    ./ags.nix
   ];
 
   home.packages = with pkgs; [

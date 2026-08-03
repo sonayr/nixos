@@ -1,0 +1,45 @@
+window.bar {
+    background-color: rgba(30, 30, 46, 0.9); /* Catppuccin Base */
+    color: #cdd6f4; /* Catppuccin Text */
+}
+
+.bar > box {
+    padding: 4px 12px;
+}
+
+/* Workspaces */
+.workspaces button {
+    padding: 0 8px;
+    margin: 0 2px;
+    background-color: transparent;
+    color: #a6adc8;
+    border-radius: 4px;
+}
+
+.workspaces button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.workspaces button.occupied {
+    color: #89b4fa;
+}
+
+.workspaces button.active {
+    background-color: rgba(137, 180, 250, 0.2);
+    color: #89b4fa;
+    font-weight: bold;
+}
+
+/* Client Title */
+.client-title {
+    font-weight: bold;
+    color: #f38ba8;
+}
+
+/* Battery & Clock */
+.battery, .clock {
+    padding: 0 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-left: 8px;
+}

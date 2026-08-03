@@ -20,6 +20,7 @@
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags.url = "github:Aylur/ags";
   };
 
   outputs = { self, nixpkgs, home-manager, sops-nix, todoist-bridge, nixarr, ... } @ inputs:
@@ -33,7 +34,7 @@
       homeConfigurations = {
         "ryan@mac" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-linux;
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = { inherit inputs; ags = inputs.ags; };
           modules = [ 
 	    ./hosts/mac/home.nix 
 	    inputs.nixvim.homeModules.nixvim
