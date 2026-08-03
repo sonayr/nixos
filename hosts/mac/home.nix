@@ -17,6 +17,8 @@
   # environment.
   home.packages = [
     (pkgs.callPackage ../../packages/tod.nix { })
+    pkgs.python3Packages.toggl-cli
+    pkgs.opencode
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
