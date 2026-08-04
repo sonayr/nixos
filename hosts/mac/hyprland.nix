@@ -42,7 +42,7 @@
         "$mod, Space, exec, $menu"
         
         ## MOVEMENT
-        "$mod, F,     fullscreen"
+        "$mod SHIFT, F,     fullscreen"
         "$mod, J,     moveFocus, up"
         "$mod, K,     moveFocus, down"
         "$mod, H,     moveFocus, left"
