@@ -28,7 +28,7 @@
           (deflayer base
               ;; tap caps lock as esc, hold caps lock as left control
               @caps @a @s @d @f @j @k @l @;
-              rctl lctl
+              lmet rmet
           )
         '';
       };
