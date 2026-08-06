@@ -1,4 +1,4 @@
-{ lib, fetchFromGitHub, rustPlatform, cacert }:
+{ lib, fetchFromGitHub, rustPlatform, pkg-config, openssl, cacert }:
 
 rustPlatform.buildRustPackage rec {
   pname = "tod";
@@ -11,7 +11,10 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-v4ystaqeMUprJbCimaTvtcfAxY7jqp6jjDmUfmPPdOM=";
   };
 
-  cargoHash = "sha256-LU+Tk6pf1x/sbMuTxP+IcO5FpeoZR+pA/GTqmTbBIxA=";
+  cargoLock = { lockFile = ./Cargo.lock; };
+
+  nativeBuildInputs = [ pkg-config ];
+  buildInputs = [ openssl ];
 
   nativeCheckInputs = [ cacert ];
 
