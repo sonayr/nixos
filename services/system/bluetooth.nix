@@ -2,10 +2,12 @@
 {
   hardware.bluetooth = {
     enable = true;
+    powerOnBoot = true;
     settings = {
       General = {
-        ControllerMode = "bredr";
+        ControllerMode = "dual";
       };
     };
   };
+  services.blueman.enable = true;
 }
