@@ -8,6 +8,7 @@
     ./cliTools.nix
     ./ghostty.nix
     ./ags.nix
+    ./opencode.nix
   ];
 
   home.packages = with pkgs; [

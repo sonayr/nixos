@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   programs.nixvim = {
     enable = true;
+    nixpkgs.source = inputs.nixpkgs;
 
     # =========================================================================
     # Globals (from lazy.lua / remaps.lua)
