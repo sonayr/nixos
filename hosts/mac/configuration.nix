@@ -48,6 +48,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.dpi = 120;
 
   # Enable Hyprland
   programs.hyprland.enable = true;
@@ -88,7 +89,8 @@
      vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
      wget
      git
-   ];
+     go
+    ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Some programs need SUID wrappers, can be configured further or are
