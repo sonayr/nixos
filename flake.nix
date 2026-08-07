@@ -21,6 +21,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ags.url = "github:Aylur/ags";
+    stylix.url = "github:danth/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, sops-nix, todoist-bridge, nixarr, ... } @ inputs:
@@ -38,6 +40,7 @@
           modules = [ 
 	    ./hosts/mac/home.nix 
 	    inputs.nixvim.homeModules.nixvim
+	    inputs.stylix.homeModules.stylix
 	  ];
         };
       };

@@ -2,7 +2,7 @@
 {
   services.mako = {
     enable = true;
-    settings = {
+    settings = lib.mkForce {
       "actionable=true" = {
         anchor = "top-right";
       };

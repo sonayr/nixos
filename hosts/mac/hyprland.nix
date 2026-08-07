@@ -43,8 +43,8 @@
         
         ## MOVEMENT
         "$mod SHIFT, F,     fullscreen"
-        "$mod, J,     moveFocus, up"
-        "$mod, K,     moveFocus, down"
+        "$mod, J,     moveFocus, down"
+        "$mod, K,     moveFocus, up"
         "$mod, H,     moveFocus, left"
         "$mod, L,     moveFocus, right"
         "$mod, 1,     workspace, 1"
