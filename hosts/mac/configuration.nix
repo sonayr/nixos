@@ -90,6 +90,7 @@
      wget
      git
      go
+     kdePackages.dolphin
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

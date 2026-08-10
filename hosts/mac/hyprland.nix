@@ -14,6 +14,10 @@
         ",preferred,auto,1"
       ];
 
+      exec-once = [
+        "hyprpaper"
+      ];
+
       general = {
         gaps_in = 5;
         gaps_out = 10;

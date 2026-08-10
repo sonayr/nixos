@@ -4,6 +4,9 @@
   programs.brave = {
     enable = true;
     package = pkgs.brave;
+    commandLineArgs = [
+      "--ozone-platform-hint=auto"
+    ];
     extensions = [
       { id = "hfjbmagddngcpeloejdejnfgbamkjaeg"; } #vimium c
       { id = "hpijlohoihegkfehhibggnkbjhoemldh"; } #Salesforce Inspector reloaded
