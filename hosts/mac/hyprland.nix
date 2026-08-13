@@ -11,7 +11,7 @@
       "$menu" = "wofi --show drun";
 
       monitor = [
-        ",preferred,auto,1"
+        ",preferred,auto,1.25"
       ];
 
       exec-once = [
@@ -79,6 +79,23 @@
       bindm = [
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
+      ];
+    };
+  };
+
+  services.hypridle = {
+    enable = true;
+    settings = {
+      listener = [
+        {
+          timeout = 300;
+          on-timeout = "${pkgs.hyprlock}/bin/hyprlock";
+        }
+        {
+          timeout = 330;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
       ];
     };
   };

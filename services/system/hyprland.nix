@@ -37,9 +37,5 @@
     };
   };
 
-  services = {
-    hypridle = {
-      enable = true;
-    };
-  };
+
 }
