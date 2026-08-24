@@ -45,6 +45,27 @@ const BatteryLabel = () => Widget.Box({
     ],
 })
 
+// Widget: Volume
+const VolumeLabel = () => Widget.Button({
+    class_name: 'volume',
+    on_clicked: () => Utils.exec('wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'),
+    setup: self => self.poll(1000, self => {
+        try {
+            const out = Utils.exec("wpctl get-volume @DEFAULT_AUDIO_SINK@")
+            const match = out.match(/Volume:\s+([0-9.]+)(\s+\[MUTED\])?/)
+            if (match) {
+                const vol = Math.round(parseFloat(match[1]) * 100)
+                const muted = match[2] ? " (M)" : ""
+                self.label = `${vol}%${muted}`
+            } else {
+                self.label = "Vol"
+            }
+        } catch {
+            self.label = "Vol"
+        }
+    }),
+})
+
 // Layout: Left, Center, Right
 const Left = () => Widget.Box({
     spacing: 8,
@@ -64,6 +85,7 @@ const Right = () => Widget.Box({
     hpack: 'end',
     spacing: 8,
     children: [
+        VolumeLabel(),
         BatteryLabel(),
         Clock(),
     ],

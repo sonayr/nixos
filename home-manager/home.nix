@@ -65,6 +65,7 @@
   };
   home.sessionVariables = {
     vim = "nvim";
+    XCURSOR_SIZE = "32";
   };
 
   # Let Home Manager install and manage itself.

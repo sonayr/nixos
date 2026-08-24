@@ -5,6 +5,10 @@
     settings = lib.mkForce {
       "actionable=true" = {
         anchor = "top-right";
+        default-timeout = 2000;
+      };
+      "app-name=blueman-applet" = {
+        default-timeout = 2000;
       };
       actions = true;
       anchor = "top-right";

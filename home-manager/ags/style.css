@@ -36,8 +36,8 @@ window.bar {
     color: #f38ba8;
 }
 
-/* Battery & Clock */
-.battery, .clock {
+/* Volume, Battery & Clock */
+.volume, .battery, .clock {
     padding: 0 8px;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 8px;

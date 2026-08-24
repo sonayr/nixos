@@ -5,6 +5,11 @@ import { createPoll } from "ags/time"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   const time = createPoll("", 1000, "date")
+  const volume = createPoll(
+    "Vol",
+    1000,
+    `wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{vol=int($2*100); if ($3=="[MUTED]") print vol "% (M)"; else print vol "%"}'`
+  )
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
 
   return (
@@ -24,13 +29,20 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
           <label label="Welcome to AGS!" />
         </button>
         <box $type="center" />
-        <button
-          $type="end"
-          onClicked={() => print("hello")}
-          halign={Gtk.Align.CENTER}
-        >
-          <label label={time} />
-        </button>
+        <box $type="end" spacing={8} halign={Gtk.Align.CENTER}>
+          <button
+            onClicked={() => execAsync("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")}
+            halign={Gtk.Align.CENTER}
+          >
+            <label label={volume} />
+          </button>
+          <button
+            onClicked={() => print("hello")}
+            halign={Gtk.Align.CENTER}
+          >
+            <label label={time} />
+          </button>
+        </box>
       </centerbox>
     </window>
   )

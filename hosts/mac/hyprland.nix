@@ -14,6 +14,10 @@
         ",preferred,auto,1.25"
       ];
 
+      env = [
+        "XCURSOR_SIZE,32"
+      ];
+
       exec-once = [
         "hyprpaper"
       ];
