@@ -90,6 +90,8 @@
      wget
      git
      go
+     sops
+     age
      kdePackages.dolphin
     ];
 
@@ -135,6 +137,13 @@
   # and migrated your data accordingly.
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+  # --- SOPS Configuration ---
+  sops.defaultSopsFile = ./secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+  sops.age.keyFile = "/home/ryan/.config/sops/age/keys.txt";
+
+  sops.secrets.todoist_api_token = { owner = "ryan"; };
+
   system.stateVersion = "25.11"; # Did you read the comment?
 
 }

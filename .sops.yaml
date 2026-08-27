@@ -3,3 +3,7 @@ creation_rules:
     key_groups:
     - age:
       - age1hpzzwz9us4mfxvye9q5v2pr8dp34t7sesgvy98y8clxujhhstywqcld8qa
+  - path_regex: hosts/mac/secrets\.yaml$
+    key_groups:
+    - age:
+      - age1z8p0w0un7hcna0v0ksm6elpelkz874wfkmmgujqu65lpd0pargqsrg3vtx
