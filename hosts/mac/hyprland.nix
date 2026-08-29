@@ -8,7 +8,9 @@
       "$mod" = "SUPER";
       "$terminal" = "ghostty";
       "$browser" = "brave";
-      "$menu" = "wofi --show drun";
+      "$menu" = "todoist-menu";
+      "$applauncher" = "wofi-toggle";
+      "$scriptmenu" = "script-menu";
 
       monitor = [
         ",preferred,auto,1.25"
@@ -20,6 +22,7 @@
 
       exec-once = [
         "hyprpaper"
+        "mako"
       ];
 
       general = {
@@ -48,9 +51,11 @@
         "$mod, M,     exit"
         "$mod, V,     togglefloating"
         "$mod, Space, exec, $menu"
+        "$mod SHIFT, Space, exec, $applauncher"
+        "$mod CONTROL, Space, exec, $scriptmenu"
         
         ## MOVEMENT
-        "$mod SHIFT, F,     fullscreen"
+        "$mod, F,     fullscreen"
         "$mod, J,     moveFocus, down"
         "$mod, K,     moveFocus, up"
         "$mod, H,     moveFocus, left"
