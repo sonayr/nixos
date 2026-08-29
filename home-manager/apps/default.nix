@@ -9,6 +9,8 @@
     ./ghostty.nix
     ./ags.nix
     ./opencode.nix
+    ./wofi.nix
+    ./script-library.nix
   ];
 
   home.packages = with pkgs; [

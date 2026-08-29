@@ -15,7 +15,8 @@ This repository currently defines two main system configurations:
 *   **[sops-nix](https://github.com/Mic92/sops-nix)**: Provides secure, encrypted secrets management using Mozilla SOPS and `age` keys, keeping secrets safe in the public repository.
 *   **[nixarr](https://github.com/nix-media-server/nixarr)**: Integrated media server suite for the home server.
 *   **Frigate NVR**: NVR configuration for home security. Media and database storage is mounted from the `mergerfs` storage pool to avoid filling up the root NVMe drive.
-*   **Custom Inputs**: Includes tailored environments like `sfdx-nix` and locally sourced applications like `todoist-bridge`.
+*   **Custom Inputs**: Included tailored environments like `sfdx-nix` and locally sourced applications like `todoist-bridge`.
+*   **Wofi Script Library**: Extensible local script runner (`script-menu`) powered by `wofi` and Ghostty, featuring a Monkeytype stats retrieval engine, AI typing review, and personalized training plan generator (`scripts/`).
 
 ## 📂 Repository Structure
 
