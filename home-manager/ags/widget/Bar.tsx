@@ -15,6 +15,11 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
     5000,
     `sh -c 'cap=$(cat /sys/class/power_supply/*/capacity 2>/dev/null | head -n 1); if [ -n "$cap" ]; then echo "\${cap}%"; else bat=$(upower -e 2>/dev/null | grep -m 1 battery); if [ -n "$bat" ]; then upower -i "$bat" 2>/dev/null | grep percentage | awk "{print \\$2}"; else echo "Bat"; fi; fi'`
   )
+  const brightness = createPoll(
+    "Brt",
+    2000,
+    `sh -c '/run/current-system/sw/bin/brightnessctl -m 2>/dev/null | awk -F, "{print \\$4}" || echo "Brt"'`
+  )
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
 
   return (
@@ -26,13 +31,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       application={app}
     >
       <centerbox>
-        <button
-          $type="start"
-          onClicked={() => execAsync("echo hello").then(console.log)}
-          halign={Gtk.Align.CENTER}
-        >
-          <label label="Welcome to AGS!" />
-        </button>
+        <box $type="start" />
         <box $type="center" />
         <box $type="end" spacing={8} halign={Gtk.Align.CENTER}>
           <button
@@ -49,6 +48,24 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             <box spacing={4}>
               <label label="🔋" />
               <label class="percent" label={battery} />
+            </box>
+          </button>
+          <button
+            class="brightness"
+            onButtonPressEvent={(self, event) => {
+              const button = event.get_button()[1]
+              if (button === 3) {
+                execAsync("brightnessctl set 10%-").catch(() => {})
+              } else if (button === 1) {
+                execAsync("brightnessctl set 10%+").catch(() => {})
+              }
+              return true
+            }}
+            halign={Gtk.Align.CENTER}
+          >
+            <box spacing={4}>
+              <label label="🔆" />
+              <label class="percent" label={brightness} />
             </box>
           </button>
           <button
