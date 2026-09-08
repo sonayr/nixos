@@ -13,16 +13,22 @@ HISTORY_FILE = os.path.join(STATE_DIR, "history.json")
 
 def get_api_key():
     key = os.environ.get("MONKEYTYPE_API_KEY")
+    if not key and os.path.exists("/run/secrets/monkeytype_api_token"):
+        try:
+            with open("/run/secrets/monkeytype_api_token", "r") as f:
+                key = f.read().strip()
+        except Exception:
+            pass
     if not key:
-        print("Error: MONKEYTYPE_API_KEY environment variable is not set.")
-        print("Please set it in your environment or shell configuration.")
+        print("Error: MONKEYTYPE_API_KEY environment variable or sops secret is not set.")
+        print("Please set it in your environment or ensure sops-nix secret /run/secrets/monkeytype_api_token exists.")
         sys.exit(1)
     return key
 
 def api_get(endpoint, api_key):
     url = f"{API_BASE}{endpoint}"
     req = urllib.request.Request(url, headers={
-        "Authorization": f"Bearer {api_key}",
+        "Authorization": f"ApeKey {api_key}",
         "User-Agent": "NixOS-TypingTrainer/1.0"
     })
     try:
@@ -42,7 +48,7 @@ def main():
 
     print("\nFetching telemetry from Monkeytype...")
     stats = api_get("/users/stats", api_key)
-    pbs = api_get("/users/personalBests", api_key)
+    pbs = api_get("/users/personalBests?mode=time", api_key)
     results = api_get("/results?limit=5", api_key)
 
     telemetry = {
@@ -91,7 +97,10 @@ def main():
     print("3. Problem Key Focus: Review recent missed keys and practice slow word repetitions.")
 
     print(f"\nSession saved to {HISTORY_FILE}")
-    input("\nPress Enter to close...")
+    try:
+        input("\nPress Enter to close...")
+    except (EOFError, KeyboardInterrupt):
+        pass
 
 if __name__ == "__main__":
     main()

@@ -3,5 +3,6 @@
   home.packages = with pkgs; [
     todoist
     gemini-cli
+    jq
   ];
 }

@@ -2,7 +2,7 @@
 {
 
   environment = {
-    systemPackages = with pkgs; [
+      systemPackages = with pkgs; [
       hyprlock
       hyprpicker
       inotify-tools
@@ -15,6 +15,8 @@
       blueman
       playerctl
       brightnessctl
+      libnotify
+      jq
     ];
     sessionVariables = {
       # Workaround for Hyprland 0.54.0+ crash on Asahi Linux (drmModifierName null pointer)

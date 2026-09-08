@@ -1,16 +1,28 @@
 { config, pkgs, ... }:
 
 let
-  wofiToggle = pkgs.writeShellScriptBin "wofi-toggle" ''
-    if ${pkgs.procps}/bin/pgrep -f "wofi --show drun" >/dev/null; then
-      ${pkgs.procps}/bin/pkill -f "wofi --show drun"
-    else
-      ${pkgs.wofi}/bin/wofi --show drun
+  wofiRun = pkgs.writeShellScriptBin "wofi-run" ''
+    STATE_FILE="/tmp/wofi-current-menu"
+    MENU_ID="$1"
+    shift
+
+    CURRENT_ID="$(${pkgs.coreutils}/bin/cat "$STATE_FILE" 2>/dev/null)"
+
+    # Force kill any existing wofi process immediately
+    ${pkgs.procps}/bin/pkill -9 -x wofi 2>/dev/null
+
+    if [ "$CURRENT_ID" = "$MENU_ID" ] && [ -n "$CURRENT_ID" ]; then
+      rm -f "$STATE_FILE"
+      exit 0
     fi
+
+    echo "$MENU_ID" > "$STATE_FILE"
+    "$@"
+    rm -f "$STATE_FILE"
   '';
 in
 {
-  home.packages = [ wofiToggle ];
+  home.packages = [ wofiRun ];
 
   programs.wofi = {
     enable = true;

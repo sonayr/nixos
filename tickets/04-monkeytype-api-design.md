@@ -5,5 +5,5 @@ What exact Monkeytype API endpoints, authentication headers, and data structures
 ## Resolution
 
 - **Endpoints**: `https://api.monkeytype.com/users/personalBests`, `https://api.monkeytype.com/results` (with query parameters like `limit=10`), and `https://api.monkeytype.com/users/stats`.
-- **Authentication**: `Authorization: Bearer <api_token>` header.
+- **Authentication**: `Authorization: ApeKey <api_token>` header (Monkeytype API keys are ApeKeys). Note that `/users/personalBests` requires a query parameter (e.g., `?mode=time`).
 - **Data structure**: JSON responses containing `data` arrays with WPM, accuracy, consistency, missed keys, and timestamp metadata.

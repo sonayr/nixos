@@ -8,9 +8,9 @@
       "$mod" = "SUPER";
       "$terminal" = "ghostty";
       "$browser" = "brave";
-      "$menu" = "todoist-menu";
-      "$applauncher" = "wofi-toggle";
-      "$scriptmenu" = "script-menu";
+      "$menu" = "wofi-run todoist todoist-menu";
+      "$applauncher" = "wofi-run applauncher wofi --show drun";
+      "$scriptmenu" = "wofi-run scripts script-menu";
 
       monitor = [
         ",preferred,auto,1.25"
@@ -21,8 +21,9 @@
       ];
 
       exec-once = [
-        "hyprpaper"
-        "mako"
+        "uwsm app -- hyprpaper"
+        "uwsm app -- mako"
+        "uwsm app -- ags"
       ];
 
       general = {
@@ -50,8 +51,8 @@
         "$mod, Q,     killactive"
         "$mod, M,     exit"
         "$mod, V,     togglefloating"
-        "$mod, Space, exec, $menu"
-        "$mod SHIFT, Space, exec, $applauncher"
+        "$mod, Space, exec, $applauncher"
+        "$mod SHIFT, Space, exec, $menu"
         "$mod CONTROL, Space, exec, $scriptmenu"
         
         ## MOVEMENT
@@ -83,6 +84,10 @@
         "$mod SHIFT, 9, movetoworkspace, 9"
         "$mod SHIFT, 0, movetoworkspace, 10"
          
+        ## AUDIO
+        ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        ", XF86AudioMute,        exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
       ];
       
       bindm = [

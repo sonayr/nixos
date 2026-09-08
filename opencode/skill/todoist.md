@@ -26,20 +26,15 @@ When creating or updating tasks, always try to infer the context from the user's
 
 ## METHODOLOGY & BEST PRACTICES
 
-### 1. Task Creation via Quick Add (Sync API)
-The Sync API's Quick Add endpoint parses natural language natively. This must be your primary method for creating tasks, as it elegantly handles tags, projects, and due dates.
-- **Endpoint:** `POST https://api.todoist.com/sync/v9/quick/add` (or the equivalent active v1/sync endpoints)
-- **Natural Language Syntax:**
-  - `text`: The task content including natural language parameters.
-  - Due Dates: Just type them! e.g., `today`, `tomorrow`, `ev weekday`
-  - Labels: Use `@` e.g., `@urgent`, `@followup`
-  - Projects: Use `#` e.g., `#Server`, `#Work`
-  - Priorities: Use `p1` (highest) to `p4` (default/lowest)
+### 1. Task Creation
+- **Endpoint:** `POST https://api.todoist.com/api/v1/tasks`
+- **Payload:** JSON with `content` (and optional `due_string`, etc.).
 - **Example Usage:**
   ```bash
-  curl "https://api.todoist.com/sync/v9/quick/add" \
+  curl -X POST "https://api.todoist.com/api/v1/tasks" \
     -H "Authorization: Bearer $TODOIST_API_TOKEN" \
-    -d text="Check database backups #Server today p1"
+    -H "Content-Type: application/json" \
+    -d '{"content": "Check database backups today", "due_string": "today"}'
   ```
 
 ### 2. Task Management (REST API)

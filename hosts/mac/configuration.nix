@@ -143,6 +143,7 @@
   sops.age.keyFile = "/home/ryan/.config/sops/age/keys.txt";
 
   sops.secrets.todoist_api_token = { owner = "ryan"; };
+  sops.secrets.monkeytype_api_token = { owner = "ryan"; };
 
   system.stateVersion = "25.11"; # Did you read the comment?
 

@@ -102,6 +102,14 @@
       { mode = "n"; key = "<S-C-d>"; action = "<cmd>lua require('opencode').command('messages_half_page_down')<CR>"; options.desc = "Scroll messages down"; }
       { mode = ["n" "v"]; key = "<leader>op"; action = "<cmd>lua require('opencode').select_prompt()<CR>"; options.desc = "Select prompt"; }
       { mode = "n"; key = "<leader>oe"; action = "<cmd>lua require('opencode').prompt('Explain @cursor and its context')<CR>"; options.desc = "Explain code near cursor"; }
+
+      # Telescope mappings
+      { mode = "n"; key = "<leader>ff"; action = "<cmd>Telescope find_files<CR>"; options.desc = "Telescope find files"; }
+      { mode = "n"; key = "<leader>fg"; action = "<cmd>Telescope live_grep<CR>"; options.desc = "Telescope live grep"; }
+      { mode = "n"; key = "<leader>fb"; action = "<cmd>Telescope buffers<CR>"; options.desc = "Telescope buffers"; }
+      { mode = "n"; key = "<leader>fh"; action = "<cmd>Telescope help_tags<CR>"; options.desc = "Telescope help tags"; }
+      { mode = "n"; key = "<leader>ps"; action = "<cmd>Telescope grep_string<CR>"; options.desc = "Telescope grep string under cursor"; }
+      { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope git_files<CR>"; options.desc = "Telescope git files"; }
     ];
 
     # =========================================================================
@@ -109,7 +117,10 @@
     # =========================================================================
     plugins = {
       lualine.enable = true;
-      telescope.enable = true;
+      telescope = {
+        enable = true;
+        extensions.fzf-native.enable = true;
+      };
       oil.enable = true;
       harpoon.enable = true;
       fugitive.enable = true;

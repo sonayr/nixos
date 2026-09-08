@@ -6,7 +6,7 @@ if [ ! -d "$SCRIPTS_DIR" ]; then
     exit 1
 fi
 
-selected=$(find "$SCRIPTS_DIR" -maxdepth 1 -type f \( -executable -o -name "*.py" -o -name "*.sh" \) -printf "%f\n" | sort | wofi --dmenu --prompt "Script Library:")
+selected=$(find "$SCRIPTS_DIR" -maxdepth 1 -type f \( -executable -o -name "*.py" -o -name "*.sh" \) ! -name "script-menu.sh" -printf "%f\n" | sort | wofi --dmenu --prompt "Script Library:")
 
 if [ -n "$selected" ]; then
     script_path="$SCRIPTS_DIR/$selected"

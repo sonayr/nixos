@@ -12,7 +12,7 @@
       };
       actions = true;
       anchor = "top-right";
-      background-color = "#A282C34";
+      background-color = "#282C34";
       border-color = "#010101";
       border-radius = 0;
       default-timeout = 2000;

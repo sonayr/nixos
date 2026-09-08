@@ -13,21 +13,18 @@
   home.username = "ryan";
   home.homeDirectory = "/home/ryan";
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    (pkgs.callPackage ../../packages/tod.nix { })
+  home.packages = let
+    todPkg = pkgs.callPackage ../../packages/tod.nix { };
+    todoistMenu = pkgs.callPackage ../../packages/todoist-menu.nix { inherit todPkg; };
+  in [
+    todPkg
     pkgs.python3Packages.toggl-cli
     pkgs.opencode
+    todoistMenu
   ];
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
-  home.file = {
-  };
-
   home.sessionVariables = {
-    # EDITOR = "vim";
+    EDITOR = "nvim";
   };
 
   # Let Home Manager install and manage itself.

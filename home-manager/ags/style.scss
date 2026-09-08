@@ -17,4 +17,14 @@ window.Bar {
     border-radius: 8px;
     margin: 2px;
   }
+
+  .battery {
+    label.percent {
+      opacity: 1;
+    }
+  }
+
+  .battery-warning {
+    color: #ff5555;
+  }
 }

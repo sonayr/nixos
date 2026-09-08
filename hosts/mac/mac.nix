@@ -6,6 +6,7 @@ nixpkgs.lib.nixosSystem {
   specialArgs = { inherit inputs; };
   modules = [
     inputs.apple-silicon.nixosModules.default
+    inputs.sops-nix.nixosModules.sops
     ./configuration.nix
   ];
 }
