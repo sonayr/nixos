@@ -23,7 +23,7 @@
       exec-once = [
         "uwsm app -- hyprpaper"
         "uwsm app -- mako"
-        "uwsm app -- ags"
+        "uwsm app ags run"
       ];
 
       general = {
@@ -48,6 +48,7 @@
       bind = [
         "$mod, T,     exec, $terminal"
         "$mod, B,     exec, $browser"
+        "$mod, O,     exec, $terminal -e opencode"
         "$mod, Q,     killactive"
         "$mod, M,     exit"
         "$mod, V,     togglefloating"
