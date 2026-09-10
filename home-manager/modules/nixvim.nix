@@ -110,6 +110,7 @@
       { mode = "n"; key = "<leader>fh"; action = "<cmd>Telescope help_tags<CR>"; options.desc = "Telescope help tags"; }
       { mode = "n"; key = "<leader>ps"; action = "<cmd>Telescope grep_string<CR>"; options.desc = "Telescope grep string under cursor"; }
       { mode = "n"; key = "<C-p>"; action = "<cmd>Telescope git_files<CR>"; options.desc = "Telescope git files"; }
+      { mode = "n"; key = "<leader>gs"; action = "<cmd>Git<CR>"; options.desc = "Git status (Fugitive)"; }
     ];
 
     # =========================================================================
