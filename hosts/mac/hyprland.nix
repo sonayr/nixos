@@ -54,6 +54,7 @@
         "$mod, V,     togglefloating"
         "$mod, Space, exec, $applauncher"
         "$mod SHIFT, Space, exec, $menu"
+        "CONTROL SHIFT, T,     exec, $menu"
         "$mod CONTROL, Space, exec, $scriptmenu"
         
         ## MOVEMENT
