@@ -39,6 +39,14 @@ in
   xdg.configFile."opencode/tui.json".text = builtins.toJSON {
     "$schema" = "https://opencode.ai/tui.json";
     theme = "stylix";
+    keybinds = {
+      messages_half_page_up = "ctrl+u";
+      messages_half_page_down = "ctrl+d";
+      input_delete_to_line_start = "none";
+      input_delete = "delete,shift+delete";
+      session_delete = "none";
+      stash_delete = "none";
+    };
   };
 
   xdg.configFile."opencode/themes/stylix.json".text = builtins.toJSON {

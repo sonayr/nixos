@@ -13,7 +13,8 @@
       "$scriptmenu" = "wofi-run scripts script-menu";
 
       monitor = [
-        ",preferred,auto,1.25"
+        "eDP-1,preferred,0x0,1.25"
+        ",preferred,auto,1"
       ];
 
       env = [

@@ -10,7 +10,10 @@ selected=$(find "$SCRIPTS_DIR" -maxdepth 1 -type f \( -executable -o -name "*.py
 
 if [ -n "$selected" ]; then
     script_path="$SCRIPTS_DIR/$selected"
-    if [ -x "$script_path" ] || [[ "$selected" == *.sh ]]; then
+    if [[ "$selected" == "monkeytype-session.sh" ]]; then
+        bash "$script_path" &
+        notify-send "MonkeyType" "Session started in background"
+    elif [ -x "$script_path" ] || [[ "$selected" == *.sh ]]; then
         ghostty -e bash -c "$script_path"
     elif [[ "$selected" == *.py ]]; then
         ghostty -e python3 "$script_path"
