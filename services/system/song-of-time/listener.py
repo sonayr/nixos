@@ -240,7 +240,14 @@ def main():
 
                 if recent_pitch_classes == TARGET_PATTERN:
                     update_status("♪ Time flows again...")
-                    sys.stderr.write("song-of-time: Song of Time recognized! Unlocking hyprlock...\n")
+                    sys.stderr.write("song-of-time: Song of Time recognized! Holding message for 3s before unlocking...\n")
+                    # Stop recording audio immediately
+                    if audio_proc and audio_proc.poll() is None:
+                        try:
+                            audio_proc.terminate()
+                        except Exception:
+                            pass
+                    time.sleep(3.0)
                     subprocess.run(
                         ["pkill", "-SIGUSR1", "-u", str(os.getuid()), "hyprlock"],
                         check=False
