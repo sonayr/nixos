@@ -80,6 +80,31 @@
     "broadcom-sta-6.30.223.271-59-6.18.39"
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      ghostty = prev.symlinkJoin {
+        name = "ghostty";
+        paths = [ prev.ghostty ];
+        nativeBuildInputs = [ prev.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/ghostty \
+            --set MESA_GL_VERSION_OVERRIDE "4.3FC" \
+            --set MESA_GLSL_VERSION_OVERRIDE "430"
+
+          rm -rf $out/share/applications
+          mkdir -p $out/share/applications
+          for f in ${prev.ghostty}/share/applications/*.desktop; do
+            [ -e "$f" ] || continue
+            sed -e "s|${prev.ghostty}/bin/ghostty|$out/bin/ghostty|g" "$f" > "$out/share/applications/$(basename "$f")"
+          done
+        '';
+        passthru = (prev.ghostty.passthru or { }) // {
+          inherit (prev.ghostty) terminfo shell_integration man;
+        };
+      };
+    })
+  ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ry = {
     isNormalUser = true;
