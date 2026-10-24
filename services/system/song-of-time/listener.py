@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 """
 Song of Time Audio Unlock Listener for Hyprlock.
-Listens to the microphone for the iconic Song of Time motif on piano (or ocarina):
+Listens to the microphone and displays every note heard (up to the last 6 notes).
+Unlocks hyprlock via SIGUSR1 as soon as the last 6 notes match the Song of Time motif:
 A -> D -> F -> A -> D -> F
-Updates a subtle indicator status file for hyprlock widgets and sends SIGUSR1
-to hyprlock on successful recognition to unlock the screen.
 """
 
 import os
@@ -25,7 +24,7 @@ CHUNK_BYTES = HOP * 2  # 16-bit mono = 2 bytes per sample -> 1024 bytes
 
 MAX_LISTEN_TIME = 60.0  # 1 minute listening window
 MIN_NOTE_DUR = 0.10     # Note candidate must sustain >= 100ms to confirm
-MAX_NOTE_GAP = 10.0     # Generous 10 seconds allowed between notes so player can take time
+MAX_NOTE_GAP = 10.0     # Reset display back to 'listening...' after 10s of silence
 
 RUNTIME_DIR = os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}")
 STATUS_FILE = os.path.join(RUNTIME_DIR, "song-of-time.status")
@@ -127,9 +126,9 @@ def main():
     buf = np.zeros(N_FFT, dtype=np.float32)
     chroma_smooth = np.zeros(12)
 
-    matched_idx = 0
-    matched_names = []
-    active_note = None          # Currently registered note in song progression
+    recent_pitch_classes = []
+    recent_note_names = []
+    active_note = None          # Currently registered note
     candidate_note = None       # Candidate new pitch class
     candidate_start_time = 0.0
     last_note_time = 0.0
@@ -178,9 +177,9 @@ def main():
         # Audio threshold gate
         if energy < 0.008:
             candidate_note = None
-            if matched_idx > 0 and (elapsed - last_note_time) > MAX_NOTE_GAP:
-                matched_idx = 0
-                matched_names = []
+            if recent_pitch_classes and (elapsed - last_note_time) > MAX_NOTE_GAP:
+                recent_pitch_classes = []
+                recent_note_names = []
                 active_note = None
                 update_status("♪ listening...")
             continue
@@ -198,22 +197,22 @@ def main():
 
         if conf < 0.35:
             candidate_note = None
-            if matched_idx > 0 and (elapsed - last_note_time) > MAX_NOTE_GAP:
-                matched_idx = 0
-                matched_names = []
+            if recent_pitch_classes and (elapsed - last_note_time) > MAX_NOTE_GAP:
+                recent_pitch_classes = []
+                recent_note_names = []
                 active_note = None
                 update_status("♪ listening...")
             continue
 
-        # Check gap timeout between distinct notes
-        if matched_idx > 0 and (elapsed - last_note_time) > MAX_NOTE_GAP:
-            matched_idx = 0
-            matched_names = []
+        # Check gap timeout between notes
+        if recent_pitch_classes and (elapsed - last_note_time) > MAX_NOTE_GAP:
+            recent_pitch_classes = []
+            recent_note_names = []
             active_note = None
             update_status("♪ listening...")
 
         # If it's still the active note ringing out, keep last_note_time refreshed!
-        # Holding a note for 2, 3, or 5 seconds will NEVER reset the progress.
+        # Holding a note will NEVER duplicate it or reset the display.
         if top_pc == active_note:
             candidate_note = None
             last_note_time = elapsed
@@ -231,36 +230,26 @@ def main():
                 active_note = new_note
                 last_note_time = elapsed
 
-                expected = TARGET_PATTERN[matched_idx]
-                if new_note == expected:
-                    matched_idx += 1
-                    matched_names.append(NOTE_NAMES[new_note])
-                    sys.stderr.write(f"song-of-time: matched note {matched_idx}/6: {NOTE_NAMES[new_note]}\n")
+                recent_pitch_classes.append(new_note)
+                recent_note_names.append(NOTE_NAMES[new_note])
+                if len(recent_pitch_classes) > 6:
+                    recent_pitch_classes.pop(0)
+                    recent_note_names.pop(0)
 
-                    if matched_idx == len(TARGET_PATTERN):
-                        update_status("♪ Time flows again...")
-                        sys.stderr.write("song-of-time: Song of Time recognized! Unlocking hyprlock...\n")
-                        subprocess.run(
-                            ["pkill", "-SIGUSR1", "-u", str(os.getuid()), "hyprlock"],
-                            check=False
-                        )
-                        time.sleep(0.5)
-                        cleanup(clean_status=True)
-                        return
-                    else:
-                        update_status("♪ " + "  ".join(matched_names))
+                sys.stderr.write(f"song-of-time: heard note {NOTE_NAMES[new_note]} -> notes: {' '.join(recent_note_names)}\n")
 
-                elif new_note == TARGET_PATTERN[0]:
-                    # Restarted pattern from note 1 (A)
-                    matched_idx = 1
-                    matched_names = [NOTE_NAMES[new_note]]
-                    update_status("♪ " + "  ".join(matched_names))
+                if recent_pitch_classes == TARGET_PATTERN:
+                    update_status("♪ Time flows again...")
+                    sys.stderr.write("song-of-time: Song of Time recognized! Unlocking hyprlock...\n")
+                    subprocess.run(
+                        ["pkill", "-SIGUSR1", "-u", str(os.getuid()), "hyprlock"],
+                        check=False
+                    )
+                    time.sleep(0.5)
+                    cleanup(clean_status=True)
+                    return
                 else:
-                    # Wrong note played: reset
-                    matched_idx = 0
-                    matched_names = []
-                    active_note = None
-                    update_status("♪ listening...")
+                    update_status("♪ " + "  ".join(recent_note_names))
 
     cleanup(clean_status=True)
 
