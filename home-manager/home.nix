@@ -45,6 +45,9 @@
     ".config/hypr/ocarina.jpg" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/ocarina.jpg";
     };
+    ".config/hypr/hyprlock.conf" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/hyprlock.conf";
+    };
     ".config/hypr/scripts" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nixos/home-manager/dotfiles/hypr/.config/hypr/scripts";
     };

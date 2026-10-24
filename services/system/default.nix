@@ -6,6 +6,7 @@
     ./hyprland.nix
     ./neovim.nix
     ./bluetooth.nix
+    ./song-of-time.nix
   ];
 }
 

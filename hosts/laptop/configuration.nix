@@ -53,6 +53,9 @@
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
 
+  # Enable Song of Time audio unlock for Hyprlock
+  services.song-of-time.enable = true;
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -74,6 +77,7 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
     "broadcom-sta-6.30.223.271-59-6.18.22"
+    "broadcom-sta-6.30.223.271-59-6.18.39"
   ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
