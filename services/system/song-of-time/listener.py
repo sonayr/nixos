@@ -24,8 +24,8 @@ HOP = 512
 CHUNK_BYTES = HOP * 2  # 16-bit mono = 2 bytes per sample -> 1024 bytes
 
 MAX_LISTEN_TIME = 60.0  # 1 minute listening window
-MIN_NOTE_DUR = 0.12     # Note must be held >= 120ms to count
-MAX_NOTE_GAP = 3.5      # Max seconds between notes before resetting sequence
+MIN_NOTE_DUR = 0.10     # Note candidate must sustain >= 100ms to confirm
+MAX_NOTE_GAP = 10.0     # Generous 10 seconds allowed between notes so player can take time
 
 RUNTIME_DIR = os.environ.get("XDG_RUNTIME_DIR", f"/run/user/{os.getuid()}")
 STATUS_FILE = os.path.join(RUNTIME_DIR, "song-of-time.status")
@@ -33,7 +33,7 @@ DONE_FILE = os.path.join(RUNTIME_DIR, "song-of-time.done")
 
 audio_proc = None
 
-def cleanup(*args):
+def cleanup(clean_status=True):
     global audio_proc
     if audio_proc and audio_proc.poll() is None:
         try:
@@ -44,15 +44,19 @@ def cleanup(*args):
                 audio_proc.kill()
             except Exception:
                 pass
-    try:
-        if os.path.exists(STATUS_FILE):
-            os.remove(STATUS_FILE)
-    except Exception:
-        pass
+    if clean_status:
+        try:
+            if os.path.exists(STATUS_FILE):
+                os.remove(STATUS_FILE)
+        except Exception:
+            pass
     sys.exit(0)
 
-signal.signal(signal.SIGINT, cleanup)
-signal.signal(signal.SIGTERM, cleanup)
+def signal_handler(*args):
+    cleanup(clean_status=True)
+
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
 
 def update_status(text):
     try:
@@ -108,7 +112,7 @@ def main():
 
     proc = start_audio_capture()
     if not proc or not proc.stdout:
-        cleanup()
+        cleanup(clean_status=True)
         return
 
     # Precompute FFT filters
@@ -121,13 +125,14 @@ def main():
     weights = 1.0 / (1.0 + (v_freqs / 1200.0) ** 2)
 
     buf = np.zeros(N_FFT, dtype=np.float32)
+    chroma_smooth = np.zeros(12)
 
     matched_idx = 0
     matched_names = []
-    last_note = None
-    last_note_start = 0.0
-    last_note_registered = False
-    last_transition_time = 0.0
+    active_note = None          # Currently registered note in song progression
+    candidate_note = None       # Candidate new pitch class
+    candidate_start_time = 0.0
+    last_note_time = 0.0
 
     start_time = time.time()
     last_hyprlock_check = start_time
@@ -142,7 +147,8 @@ def main():
                     f.write("timeout\n")
             except Exception:
                 pass
-            cleanup()
+            update_status("(click fairy to listen)")
+            cleanup(clean_status=False)
             return
 
         # Check if hyprlock was unlocked or closed
@@ -150,7 +156,7 @@ def main():
             last_hyprlock_check = now
             if not is_hyprlock_running():
                 sys.stderr.write("song-of-time: hyprlock is no longer running. Exiting.\n")
-                cleanup()
+                cleanup(clean_status=True)
                 return
 
         # Read audio chunk
@@ -170,52 +176,66 @@ def main():
         energy = np.sqrt(np.mean(frame ** 2))
 
         # Audio threshold gate
-        if energy < 0.012:
-            last_note = None
-            last_note_registered = False
-            if matched_idx > 0 and (elapsed - last_transition_time) > MAX_NOTE_GAP:
+        if energy < 0.008:
+            candidate_note = None
+            if matched_idx > 0 and (elapsed - last_note_time) > MAX_NOTE_GAP:
                 matched_idx = 0
                 matched_names = []
+                active_note = None
                 update_status("♪ listening...")
             continue
 
         mag = np.abs(np.fft.rfft(frame))[valid] * weights
-        chroma = np.bincount(pitch_classes, weights=mag, minlength=12)
-        norm = np.linalg.norm(chroma)
+        c = np.bincount(pitch_classes, weights=mag, minlength=12)
+        norm = np.linalg.norm(c)
         if norm > 1e-4:
-            chroma /= norm
+            c /= norm
 
-        top_pc = np.argmax(chroma)
-        conf = chroma[top_pc]
+        # Smooth chroma over time to avoid single-frame overtone flutter
+        chroma_smooth = 0.5 * chroma_smooth + 0.5 * c
+        top_pc = np.argmax(chroma_smooth)
+        conf = chroma_smooth[top_pc]
 
-        if conf < 0.40:
-            last_note = None
-            last_note_registered = False
-            if matched_idx > 0 and (elapsed - last_transition_time) > MAX_NOTE_GAP:
+        if conf < 0.35:
+            candidate_note = None
+            if matched_idx > 0 and (elapsed - last_note_time) > MAX_NOTE_GAP:
                 matched_idx = 0
                 matched_names = []
+                active_note = None
                 update_status("♪ listening...")
             continue
 
-        # Note tracking
-        if top_pc != last_note:
-            last_note = top_pc
-            last_note_start = elapsed
-            last_note_registered = False
-        else:
-            if not last_note_registered and (elapsed - last_note_start) >= MIN_NOTE_DUR:
-                last_note_registered = True
+        # Check gap timeout between distinct notes
+        if matched_idx > 0 and (elapsed - last_note_time) > MAX_NOTE_GAP:
+            matched_idx = 0
+            matched_names = []
+            active_note = None
+            update_status("♪ listening...")
 
-                if matched_idx > 0 and (elapsed - last_transition_time) > MAX_NOTE_GAP:
-                    matched_idx = 0
-                    matched_names = []
+        # If it's still the active note ringing out, keep last_note_time refreshed!
+        # Holding a note for 2, 3, or 5 seconds will NEVER reset the progress.
+        if top_pc == active_note:
+            candidate_note = None
+            last_note_time = elapsed
+            continue
+
+        # Detected a candidate new note
+        if top_pc != candidate_note:
+            candidate_note = top_pc
+            candidate_start_time = elapsed
+        else:
+            # Candidate note sustained for >= MIN_NOTE_DUR
+            if (elapsed - candidate_start_time) >= MIN_NOTE_DUR:
+                new_note = candidate_note
+                candidate_note = None
+                active_note = new_note
+                last_note_time = elapsed
 
                 expected = TARGET_PATTERN[matched_idx]
-                if last_note == expected:
+                if new_note == expected:
                     matched_idx += 1
-                    last_transition_time = elapsed
-                    matched_names.append(NOTE_NAMES[last_note])
-                    sys.stderr.write(f"song-of-time: matched note {matched_idx}/6: {NOTE_NAMES[last_note]}\n")
+                    matched_names.append(NOTE_NAMES[new_note])
+                    sys.stderr.write(f"song-of-time: matched note {matched_idx}/6: {NOTE_NAMES[new_note]}\n")
 
                     if matched_idx == len(TARGET_PATTERN):
                         update_status("♪ Time flows again...")
@@ -225,22 +245,24 @@ def main():
                             check=False
                         )
                         time.sleep(0.5)
-                        cleanup()
+                        cleanup(clean_status=True)
                         return
                     else:
                         update_status("♪ " + "  ".join(matched_names))
 
-                elif last_note == TARGET_PATTERN[0]:
+                elif new_note == TARGET_PATTERN[0]:
+                    # Restarted pattern from note 1 (A)
                     matched_idx = 1
-                    last_transition_time = elapsed
-                    matched_names = [NOTE_NAMES[last_note]]
+                    matched_names = [NOTE_NAMES[new_note]]
                     update_status("♪ " + "  ".join(matched_names))
                 else:
+                    # Wrong note played: reset
                     matched_idx = 0
                     matched_names = []
+                    active_note = None
                     update_status("♪ listening...")
 
-    cleanup()
+    cleanup(clean_status=True)
 
 if __name__ == "__main__":
     main()

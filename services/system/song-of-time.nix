@@ -13,6 +13,20 @@ let
     exec ${pythonEnv}/bin/python ${./song-of-time/listener.py} "$@"
   '';
 
+  songOfTimeRestart = pkgs.writeShellScriptBin "song-of-time-restart" ''
+    export PATH="${lib.makeBinPath [ pkgs.systemd pkgs.procps pkgs.coreutils ]}:$PATH"
+
+    RUNTIME_DIR="''${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+    STATUS_FILE="$RUNTIME_DIR/song-of-time.status"
+    DONE_FILE="$RUNTIME_DIR/song-of-time.done"
+
+    rm -f "$DONE_FILE"
+    echo "♪ listening..." > "$STATUS_FILE"
+
+    systemctl --user stop song-of-time.service 2>/dev/null
+    systemctl --user start song-of-time.service 2>/dev/null &
+  '';
+
   songOfTimeStatus = pkgs.writeShellScriptBin "song-of-time-status" ''
     export PATH="${lib.makeBinPath [ pkgs.systemd pkgs.procps pkgs.coreutils ]}:$PATH"
 
@@ -40,6 +54,8 @@ let
 
     if [ -f "$STATUS_FILE" ]; then
       cat "$STATUS_FILE"
+    elif [ -f "$DONE_FILE" ]; then
+      echo "(click fairy to listen)"
     fi
   '';
 
@@ -52,6 +68,7 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = [
       songOfTimeListener
+      songOfTimeRestart
       songOfTimeStatus
     ];
 
