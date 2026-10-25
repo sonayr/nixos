@@ -66,6 +66,14 @@ def update_status(text):
     except Exception:
         pass
 
+def fade_in_message(message="♪ Time flows again...", duration_s=2.0, steps=20):
+    step_time = duration_s / steps
+    for i in range(steps + 1):
+        alpha = int((i / steps) * 100)
+        markup = f'<span alpha="{alpha}%">{message}</span>'
+        update_status(markup)
+        time.sleep(step_time)
+
 def is_hyprlock_running():
     try:
         res = subprocess.run(
@@ -239,15 +247,18 @@ def main():
                 sys.stderr.write(f"song-of-time: heard note {NOTE_NAMES[new_note]} -> notes: {' '.join(recent_note_names)}\n")
 
                 if recent_pitch_classes == TARGET_PATTERN:
-                    update_status("♪ Time flows again...")
-                    sys.stderr.write("song-of-time: Song of Time recognized! Holding message for 3s before unlocking...\n")
+                    sys.stderr.write("song-of-time: Song of Time recognized! Fading in message over 2s...\n")
                     # Stop recording audio immediately
                     if audio_proc and audio_proc.poll() is None:
                         try:
                             audio_proc.terminate()
                         except Exception:
                             pass
-                    time.sleep(3.0)
+                    # Fade in message over 2 seconds
+                    fade_in_message("♪ Time flows again...", duration_s=2.0, steps=20)
+                    # Hold at full opacity for 1.5 seconds
+                    time.sleep(1.5)
+                    sys.stderr.write("song-of-time: Unlocking hyprlock...\n")
                     subprocess.run(
                         ["pkill", "-SIGUSR1", "-u", str(os.getuid()), "hyprlock"],
                         check=False
