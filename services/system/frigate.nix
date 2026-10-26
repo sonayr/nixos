@@ -26,10 +26,10 @@
       };
       streams = {
         doorbell = [
-          "rtsp://admin:\${FRIGATE_CAMERA_PASSWORD}@192.168.5.68:554/h264Preview_01_main"
+          "rtsp://admin:\${FRIGATE_CAMERA_PASSWORD}@192.168.5.75:554/h264Preview_01_main"
         ];
         doorbell_sub = [
-          "rtsp://admin:\${FRIGATE_CAMERA_PASSWORD}@192.168.5.68:554/h264Preview_01_sub"
+          "rtsp://admin:\${FRIGATE_CAMERA_PASSWORD}@192.168.5.75:554/h264Preview_01_sub"
         ];
       };
     };
@@ -62,7 +62,7 @@
             ];
           };
           detect = {
-            enabled = true;
+            enabled = false;
           };
           record = {
             enabled = true;

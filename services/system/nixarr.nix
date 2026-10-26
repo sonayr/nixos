@@ -69,8 +69,8 @@
     port = 8191;
   };
 
-  # 8191 for FlareSolverr, 8096 for Jellyfin
-  networking.firewall.allowedTCPPorts = [ 8191 8096 ];
+  # 8191 for FlareSolverr, 8096 for Jellyfin, 8989 for Sonarr
+  networking.firewall.allowedTCPPorts = [ 8191 8096 8989 ];
 
   # 1900, 7359 for Jellyfin DLNA and discovery
   networking.firewall.allowedUDPPorts = [ 1900 7359 ];

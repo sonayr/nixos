@@ -16,6 +16,7 @@ This repository currently defines two main system configurations:
 *   **[nixarr](https://github.com/nix-media-server/nixarr)**: Integrated media server suite for the home server.
 *   **Frigate NVR**: NVR configuration for home security. Media and database storage is mounted from the `mergerfs` storage pool to avoid filling up the root NVMe drive.
 *   **Custom Inputs**: Included tailored environments like `sfdx-nix` and locally sourced applications like `todoist-bridge`.
+*   **Custom Packages**: Pinned and custom package derivations such as `cloudflared` (version 2026.10.4) and local utilities (`packages/`).
 *   **Wofi Script Library**: Extensible local script runner (`script-menu`) powered by `wofi` and Ghostty, featuring a Monkeytype stats retrieval engine, AI typing review, and personalized training plan generator (`scripts/`).
 
 ## 📂 Repository Structure
@@ -24,6 +25,7 @@ This repository currently defines two main system configurations:
 *   `hosts/`: Machine-specific hardware configurations and system-level setups.
     *   `laptop/`: System definitions for the laptop.
     *   `server/`: Headless system definitions and server-specific roles.
+*   `packages/`: Custom package derivations (e.g. `cloudflared`, `tod`, `todoist-menu`).
 *   `home-manager/`: Contains user-scoped configurations, categorized into `apps`, `dotfiles`, and the central `home.nix`.
 *   `services/`: Custom NixOS modules or systemd services shared across hosts.
 *   `.sops.yaml`: Defines encryption rules and public `age` keys for managing SOPS secrets securely.

@@ -228,6 +228,7 @@
   };
 
   # Add Jellyfin and Jellyseerr to the existing cloudflared tunnel
+  services.cloudflared.package = pkgs.callPackage ../../packages/cloudflared.nix { };
   services.cloudflared.tunnels."todoist-webhook".ingress = {
     "jelly.onayr.com" = "http://localhost:8096";
     "seer.onayr.com" = "http://localhost:5055";
@@ -251,6 +252,15 @@
         { command = "/run/current-system/sw/bin/fsck.ext4"; options = [ "NOPASSWD" ]; }
         { command = "/run/wrappers/bin/blkid"; options = [ "NOPASSWD" ]; }
         { command = "/run/current-system/sw/bin/blkid"; options = [ "NOPASSWD" ]; }
+        { command = "/run/wrappers/bin/mount"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/mount"; options = [ "NOPASSWD" ]; }
+        { command = "/run/wrappers/bin/umount"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/umount"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/rsync"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/cp"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/mv"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/rm"; options = [ "NOPASSWD" ]; }
+        { command = "/run/current-system/sw/bin/ls"; options = [ "NOPASSWD" ]; }
       ];
     }
   ];
@@ -265,6 +275,9 @@
   };
   hardware.graphics = {
     enable = true;
+    extraPackages = with pkgs; [
+      nvidia-vaapi-driver
+    ];
   };
 
   # Give Jellyfin access to the GPU
