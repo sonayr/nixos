@@ -70,9 +70,13 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
+  # Power management and battery monitoring
+  services.upower.enable = true;
+  services.power-profiles-daemon.enable = true;
+
   services.logind.settings.Login = {
-    HandleLidSwitch = "hibernate";
-    HandleLidSwitchExternalPower = "hibernate";
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchExternalPower = "suspend";
   };
 
   programs.zsh.enable = true;
